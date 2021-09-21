@@ -204,6 +204,10 @@ class SMCE_API FrameBuffer {
     bool write_rgb888(std::span<const std::byte>);
     /// Copies a frame into an RGB888 buffer
     bool read_rgb888(std::span<std::byte>);
+    /// Copies a frame from an RGB565 buffer
+    bool write_rgb565(std::span<const std::byte>);
+    /// Copies a frame into an RGB565 buffer
+    bool read_rgb565(std::span<std::byte>);
     /// Copies a frame from an RGB444 buffer
     bool write_rgb444(std::span<const std::byte>);
     /// Copies a frame into an RGB444 buffer

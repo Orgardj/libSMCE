@@ -350,13 +350,6 @@ bool FrameBuffer::write_rgb565(std::span<const std::byte> buf) {
         *to++ = buf[i] << 3; // b (...bbbbb -> bbbbb000)
     }
 
-
-
-    for (std::byte from : buf) {
-        *to++ = from & std::byte{0xF};
-        *to++ = from << 4; // Might be a bug there in the case where we have an odd number of pixels in the frame
-    }
-
     return true;
 }
 
@@ -381,8 +374,6 @@ bool FrameBuffer::read_rgb565(std::span<std::byte> buf) {
         // https://stackoverflow.com/questions/11471122/rgb888-to-rgb565-bit-shifting
         buf[i++] = (r & (std::byte)0b11111000) << 8;
         buf[i] = ((g & (std::byte)0b11111100) << 3) | (b >> 3);
-
-        //from += 3;
     }
 
     return true;
