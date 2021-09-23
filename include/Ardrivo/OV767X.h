@@ -25,6 +25,7 @@
 // clang-format off
 enum SMCE_OV767_Format {
     RGB888,
+    RGB565,
     RGB444,
 };
 
