@@ -15,6 +15,11 @@
 #  limitations under the License.
 #
 
+if (DEFINED CMAKE_CXX_STANDARD)
+  set (PREV_CMAKE_CXX_STANDARD ${CMAKE_CXX_STANDARD})
+endif ()
+set (CMAKE_CXX_STANDARD 20)
+
 find_package (Catch2 QUIET)
 if (NOT Catch2_FOUND)
   include (FetchContent)
@@ -30,6 +35,12 @@ if (NOT Catch2_FOUND)
   set (CATCH_BUILD_STATIC_LIBRARY On CACHE INTERNAL "" FORCE)
   add_subdirectory ("${catch2_SOURCE_DIR}" "${catch2_BINARY_DIR}" EXCLUDE_FROM_ALL)
   list (APPEND CMAKE_MODULE_PATH "${Catch2_SOURCE_DIR}/extras")
+endif ()
+
+if (DEFINED PREV_CMAKE_CXX_STANDARD)
+  set (CMAKE_CXX_STANDARD ${PREV_CMAKE_CXX_STANDARD})
+else ()
+  unset (CMAKE_CXX_STANDARD)
 endif ()
 
 include (CTest)
@@ -69,9 +80,36 @@ if (WIN32 AND SMCE_BUILD_SHARED)
 endif ()
 
 set (SMCE_TEST_DIR "${CMAKE_CURRENT_BINARY_DIR}/test_dir")
+copy_at_build (DESTINATION "${SMCE_TEST_DIR}"
+    DIRECTORIES
+      sketches
+      patches
+      plugins
+      manifests
+    APPEND_TRACKER SMCE_TEST_ASSETS
+    COMMENT "Updating assets"
+)
+add_custom_target (SMCE_Tests_Assets
+    DEPENDS ${SMCE_TEST_ASSETS}
+    COMMENT ""
+)
+
 file (MAKE_DIRECTORY "${SMCE_TEST_DIR}/smce_root")
 file (GENERATE OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/inflate_ark_if_different.cmake" CONTENT [[
   # HSD generated
+  math (EXPR last_arg_idx "${CMAKE_ARGC} - 1")
+  set (start_idx -1)
+  foreach (i RANGE ${last_arg_idx})
+    if ("${CMAKE_ARGV${i}}" STREQUAL "-P")
+      set (start_idx ${i})
+      break ()
+    endif ()
+  endforeach ()
+  math (EXPR archive_path_idx "${start_idx} + 2")
+  set (archive_path "${CMAKE_ARGV${archive_path_idx}}")
+  math (EXPR output_dir_idx "${start_idx} + 3")
+  set (output_dir "${CMAKE_ARGV${output_dir_idx}}")
+
   file (TIMESTAMP "${CMAKE_ARGV3}" curr_filetime)
   if (EXISTS "${CMAKE_BINARY_DIR}/ark-filetime.txt")
     file (READ "${CMAKE_BINARY_DIR}/ark-filetime.txt" prev_filetime)
@@ -80,23 +118,26 @@ file (GENERATE OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/inflate_ark_if_different.cmak
     endif ()
   endif ()
 
-  message (STATUS "Inflating resources for testsuite execution)")
-  execute_process (COMMAND "${CMAKE_COMMAND}" -E tar xf "${CMAKE_ARGV3}"
-    WORKING_DIRECTORY "${CMAKE_ARGV4}"
+  message (STATUS "Inflating resources for testsuite execution")
+  execute_process (COMMAND "${CMAKE_COMMAND}" -E tar xf "${archive_path}"
+    WORKING_DIRECTORY "${output_dir}"
+    RESULT_VARIABLE tar_exit_code
   )
+  if (tar_exit_code)
+    message ("Where archive_path: ${archive_path}")
+    message ("Where output_dir: ${output_dir}")
+    message (FATAL_ERROR "Resource inflation failed: ${tar_exit_code}")
+  endif ()
   file (WRITE "${CMAKE_BINARY_DIR}/ark-filetime.txt" "${curr_filetime}")
 ]])
 add_custom_target (SMCE_Tests_ResDir
     COMMAND "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/inflate_ark_if_different.cmake" "${SMCE_RESOURCES_ARK}" "\"${SMCE_TEST_DIR}/smce_root\""
     DEPENDS ArdRtRes "${SMCE_RESOURCES_ARK}"
     WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-    COMMENT "Checking resources change"
+    COMMENT ""
 )
-file (COPY sketches DESTINATION "${SMCE_TEST_DIR}")
-file (COPY patches DESTINATION "${SMCE_TEST_DIR}")
-file (COPY plugins DESTINATION "${SMCE_TEST_DIR}")
-file (COPY manifests DESTINATION "${SMCE_TEST_DIR}")
+
 target_compile_definitions (SMCE_Tests PUBLIC "SMCE_TEST_DIR=\"${SMCE_TEST_DIR}\"")
-add_dependencies (SMCE_Tests SMCE_Tests_ResDir)
+add_dependencies (SMCE_Tests SMCE_Tests_ResDir SMCE_Tests_Assets)
 
 unset (SMCE_LINK_TARGET)
