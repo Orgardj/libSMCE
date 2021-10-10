@@ -330,8 +330,7 @@ bool FrameBuffer::write_rgb565(std::span<const std::byte> buf) {
         return false;
 
     auto& frame_buf = m_bdat->frame_buffers[m_idx];
-    // TODO size check
-    if (buf.size() != frame_buf.data.size() / 2)
+    if (buf.size() / 2 != frame_buf.data.size() / 3)
         return false;
 
     [[maybe_unused]] std::lock_guard lk{frame_buf.data_mut};
@@ -342,6 +341,7 @@ bool FrameBuffer::write_rgb565(std::span<const std::byte> buf) {
     for (auto i = 0; i < buf.size(); i++) {
         // TODO, not sure what this first line does need to double check what binary 1111 is used for in RGB444 conversion
         // *to++ = buf[i] & std::byte{0xF};
+
         // https://stackoverflow.com/questions/38557734/how-to-convert-16-bit-hex-color-to-rgb888-values-in-
         *to++ = buf[i] & (std::byte)0xF8; // r (rrrrr... -> rrrrr000)
         *to++ = (buf[i] << 5) | (buf[i+1] & (std::byte)0xE0 >> 3); // g (.....ggg ggg..... -> gggggg00)
