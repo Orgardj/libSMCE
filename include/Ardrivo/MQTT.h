@@ -107,9 +107,7 @@ class SMCE__DLL_RT_API MQTTClient {
         this->setTimeout(_timeout);
     }
 
-    inline bool connect(const char* clientId) {
-        return this->connect(clientId, nullptr, nullptr);
-    }
+    inline bool connect(const char* clientId) { return this->connect(clientId, nullptr, nullptr); }
     inline bool connect(const char* clientId, const char* username) {
         return this->connect(clientId, username, nullptr);
     }
