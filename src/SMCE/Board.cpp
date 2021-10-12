@@ -200,24 +200,6 @@ bool Board::terminate() noexcept {
     return true;
 }
 
-/*
-bool BoardRunner::stop() noexcept {
-    if (m_status != Status::running)
-        return false;
-
-    auto& command = m_internal->command;
-    command = Command::stop;
-    command.notify_all();
-
-    const auto val = command.wait(Command::stop);
-    const bool success = val == Command::stop_ack;
-    if (success)
-        m_status = Status::stopped;
-
-    return success;
-}
-*/
-
 // FIXME
 bool Board::stop() noexcept { return terminate(); }
 

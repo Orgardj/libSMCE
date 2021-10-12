@@ -46,7 +46,6 @@ class SMCE_API Sketch {
     stdfs::path m_tmpdir;
     stdfs::path m_executable;
     bool m_built = false;
-    // bool m_dirty = true;
 
   public:
     explicit Sketch(stdfs::path source, SketchConfig conf) noexcept

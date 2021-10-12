@@ -89,12 +89,7 @@ class SMCE_API VirtualPins {
     explicit VirtualPins(BoardData* bdat) : m_bdat{bdat} {}
 
   public:
-    // struct Iterator;
-
     [[nodiscard]] VirtualPin operator[](std::size_t idx) noexcept;
-    // [[nodiscard]] Iterator begin() noexcept;
-    // [[nodiscard]] Iterator end() noexcept;
-    // [[nodiscard]] std::size_t size() noexcept;
 };
 
 class SMCE_API VirtualUartBuffer {
@@ -243,8 +238,6 @@ class SMCE_API BoardView {
 
     VirtualPins pins{m_bdat};           /// GPIO pins
     VirtualUarts uart_channels{m_bdat}; /// UART channels
-    // VirtualI2cs i2c_buses;
-    // VirtualOpaqueDevices opaque_devices;
     FrameBuffers frame_buffers{m_bdat}; /// Camera/Screen frame-buffers
 
     constexpr BoardView() noexcept = default;
