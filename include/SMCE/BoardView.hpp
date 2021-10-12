@@ -223,8 +223,6 @@ class SMCE_API FrameBuffers {
  * \note Must stay a no-fail interface (operations all silently fail on error and never cause UB)
  **/
 class SMCE_API BoardView {
-    BoardData* m_bdat{};
-
     friend BoardDeviceView;
 
   public:
@@ -236,6 +234,7 @@ class SMCE_API BoardView {
     };
     // clang-format on
 
+    BoardData* m_bdat{};
     VirtualPins pins{m_bdat};           /// GPIO pins
     VirtualUarts uart_channels{m_bdat}; /// UART channels
     FrameBuffers frame_buffers{m_bdat}; /// Camera/Screen frame-buffers
