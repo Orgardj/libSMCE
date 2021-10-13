@@ -212,6 +212,8 @@ class SMCE_API FrameBuffer {
     bool write_rgb444(std::span<const std::byte>);
     /// Copies a frame into a packed buffer of pixels in the format GGGGBBBB0000RRRR
     bool read_rgb444(std::span<std::byte>);
+    bool write_yuv422(std::span<std::byte> buf);
+    bool read_yuv422(std::span<std::byte> buf);
 };
 
 class SMCE_API FrameBuffers {

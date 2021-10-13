@@ -18,6 +18,7 @@
 
 #include "SMCE/BoardView.hpp"
 
+#include <algorithm>
 #include <iterator>
 #include <mutex>
 #include <boost/date_time/microsec_time_clock.hpp>
@@ -346,12 +347,12 @@ bool FrameBuffer::write_rgb565(std::span<const std::byte> buf) {
     // We need to convert from 16 bits (2 bytes) into 24 bits (3 bytes)
     for (auto i = 0; i < buf.size(); i++) {
         *to++ = buf[i] & (std::byte)0b11111000; // r (rrrrr... -> rrrrr000)
-        *to++ = ((buf[i] & (std::byte)0b00000111) << 5) | ((buf[i+1] & (std::byte)0b11100000) >> 3); // g (.....ggg ggg..... -> gggggg00)
+        *to++ = ((buf[i] & (std::byte)0b00000111) << 5) |
+                ((buf[i + 1] & (std::byte)0b11100000) >> 3); // g (.....ggg ggg..... -> gggggg00)
         // Got to do i++ after since i might be unsequencedly modified otherwise
         i++;
         *to++ = (buf[i] & (std::byte)0b00011111) << 3; // b (...bbbbb -> bbbbb000)
     }
-
 
     return true;
 }
@@ -375,71 +376,13 @@ bool FrameBuffer::read_rgb565(std::span<std::byte> buf) {
         std::byte b = *from++;
 
         buf[i++] = (r & (std::byte)0b11111000) | ((g & (std::byte)0b11100000) >> 5); // rrrrrrrr gggggggg -> rrrrrggg
-        buf[i++] = ((g & (std::byte)0b00000111) << 5) | ((b & (std::byte)0b11111000) >> 3); // gggggggg bbbbbbbb -> gggbbbbb
+        buf[i++] =
+            ((g & (std::byte)0b00000111) << 5) | ((b & (std::byte)0b11111000) >> 3); // gggggggg bbbbbbbb -> gggbbbbb
     }
 
     return true;
 }
-bool FrameBuffer::write_yuv422(std::span<std::byte> buf) {
-    if (!exists())
-        return false;
-// converting YUV422 to RGB888
-    auto& frame_buf = m_bdat->frame_buffers[m_idx];
-    if (buf.size() / 6 != frame_buf.data.size() / 4)
-        return false;
-    [[maybe_unused]] std::lock_guard lk{frame_buf.data_mut};
 
-    const auto* from = frame_buf.data.data();
-	for( auto i=0; i < buf.size()){
-        std::byte u = *from++ -128;
-        std::byte y1 = *from++ -16;
-        std::byte v = *from++ -128;
-        std::byte y2 = *from++ -16;
-        double r1= 1.164 * y1 + 1.596 * v;
-        double r2= 1.164 * y2 + 1.596 * v;
-        double g1=1.164 * y1 - 0.392 * u - 0.813 * v;
-        double g2=1.164 * y2 - 0.392 * u - 0.813 * v;
-        double b1= 1.164 * y1 + 2.017 * u;
-        double b2= 1.164 * y2 + 2.017 * u;
-        buf[i++]=(std::byte)std::clamp(std::round(r1), 0, 255);
-        buf[i++]=(std::byte)std::clamp(std::round(r2), 0, 255);
-        buf[i++]=(std::byte)std::clamp(std::round(g1), 0, 255);
-        buf[i++]=(std::byte)std::clamp(std::round(g2), 0, 255);
-        buf[i++]=(std::byte)std::clamp(std::round(b1), 0, 255);
-        buf[i++]=(std::byte)std::clamp(std::round(b2), 0, 255);
-}
-return true;
-}
-
-bool FrameBuffer::read_yuv422(std::span<std::byte> buf) {
-    if (!exists())
-        return false;
-// converting RGB888 to YUV422
-    auto& frame_buf = m_bdat->frame_buffers[m_idx];
-    if (buf.size() / 4 != frame_buf.data.size() / 6)
-        return false;
-    [[maybe_unused]] std::lock_guard lk{frame_buf.data_mut};
-
-    const auto* to = frame_buf.data.data();
-	for(auto i=0, i< buf.size()){
-        std::byte r1=buf[i++];
-        std::byte r2=buf[i++];
-        std::byte g1=buf[i++];
-        std::byte g2=buf[i++];
-        std::byte b1=buf[i++];
-        std::byte b2=buf[i++];
-        double u =-(0.148 * ((r1+r2)/2)) - (0.291 * ((g1+g2)/2)) + (0.439 *((b1+b2)/2) ) + 128;
-        double y1 = (0.257 * r1) + (0.504 * g1) + (0.098 * b1) +  16;
-        double v = (0.439 * ((r1+r2)/2)) - (0.368 * ((g1+g2)/2)) - (0.071 * ((b1+b2)/2)) + 128;
-        double y2 = (0.257 * r2) + (0.504 * g2) + (0.098 * b2) +  16;
-        *to++=(std::byte) u;
-        *to++=(std::byte) y1;
-        *to++=(std::byte) v;
-        *to++=(std::byte) y2;
-
-}
-return true;
-}
 /*
  * MEDIA_BUS_FMT_RGB444_2X8_PADHI_LE is laid as:
  * 76543210 | 76543210
@@ -485,6 +428,71 @@ bool FrameBuffer::read_rgb444(std::span<std::byte> buf) {
         const auto b = *from++;
         *to++ = (g & std::byte{0xF0}) | (b >> 4);
         *to++ = r >> 4;
+    }
+
+    return true;
+}
+
+// converting YUV422 to RGB888
+bool FrameBuffer::write_yuv422(std::span<std::byte> buf) {
+    if (!exists())
+        return false;
+    auto& frame_buf = m_bdat->frame_buffers[m_idx];
+    if (buf.size() / 6 != frame_buf.data.size() / 4)
+        return false;
+    [[maybe_unused]] std::lock_guard lk{frame_buf.data_mut};
+
+    auto* from = frame_buf.data.data();
+    for (auto i = 0; i < buf.size();) {
+        auto u = (double)*from++ - 128;
+        auto y1 = (double)*from++ - 16;
+        auto v = (double)*from++ - 128;
+        auto y2 = (double)*from++ - 16;
+
+        double r1 = 1.164 * y1 + 1.596 * v;
+        double r2 = 1.164 * y2 + 1.596 * v;
+        double g1 = 1.164 * y1 - 0.392 * u - 0.813 * v;
+        double g2 = 1.164 * y2 - 0.392 * u - 0.813 * v;
+        double b1 = 1.164 * y1 + 2.017 * u;
+        double b2 = 1.164 * y2 + 2.017 * u;
+        buf[i++] = (std::byte)std::clamp(r1, 0.0, 255.0);
+        buf[i++] = (std::byte)std::clamp(r2, 0.0, 255.0);
+        buf[i++] = (std::byte)std::clamp(g1, 0.0, 255.0);
+        buf[i++] = (std::byte)std::clamp(g2, 0.0, 255.0);
+        buf[i++] = (std::byte)std::clamp(b1, 0.0, 255.0);
+        buf[i++] = (std::byte)std::clamp(b2, 0.0, 255.0);
+    }
+
+    return true;
+}
+
+// converting RGB888 to YUV422
+bool FrameBuffer::read_yuv422(std::span<std::byte> buf) {
+    if (!exists())
+        return false;
+    auto& frame_buf = m_bdat->frame_buffers[m_idx];
+    if (buf.size() / 4 != frame_buf.data.size() / 6)
+        return false;
+    [[maybe_unused]] std::lock_guard lk{frame_buf.data_mut};
+
+    auto* to = frame_buf.data.data();
+    for (auto i = 0; i < buf.size();) {
+        auto r1 = (double)buf[i++];
+        auto r2 = (double)buf[i++];
+        auto g1 = (double)buf[i++];
+        auto g2 = (double)buf[i++];
+        auto b1 = (double)buf[i++];
+        auto b2 = (double)buf[i++];
+
+        double u = -(0.148 * ((r1 + r2) / 2)) - (0.291 * ((g1 + g2) / 2)) + (0.439 * ((b1 + b2) / 2)) + 128;
+        double y1 = (0.257 * r1) + (0.504 * g1) + (0.098 * b1) + 16;
+        double v = (0.439 * ((r1 + r2) / 2)) - (0.368 * ((g1 + g2) / 2)) - (0.071 * ((b1 + b2) / 2)) + 128;
+        double y2 = (0.257 * r2) + (0.504 * g2) + (0.098 * b2) + 16;
+
+        *to++ = (std::byte)u;
+        *to++ = (std::byte)y1;
+        *to++ = (std::byte)v;
+        *to++ = (std::byte)y2;
     }
 
     return true;
