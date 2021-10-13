@@ -326,14 +326,17 @@ bool FrameBuffer::read_rgb888(std::span<std::byte> buf) {
 }
 
 /*
-* TODO
-*/
+ * TODO Check that its laid as this, just guessing currently
+ * MEDIA_BUS_FMT_RGB565_2X8_LE is laid as:
+ * 76543210 | 76543210
+ * RRRRRGGG   GGGBBBBB
+ */
 bool FrameBuffer::write_rgb565(std::span<const std::byte> buf) {
     if (!exists())
         return false;
 
     auto& frame_buf = m_bdat->frame_buffers[m_idx];
-    if (buf.size() / 2 != frame_buf.data.size() / 3)
+    if (buf.size() != frame_buf.data.size() / 3 * 2)
         return false;
 
     [[maybe_unused]] std::lock_guard lk{frame_buf.data_mut};
@@ -342,16 +345,13 @@ bool FrameBuffer::write_rgb565(std::span<const std::byte> buf) {
 
     // We need to convert from 16 bits (2 bytes) into 24 bits (3 bytes)
     for (auto i = 0; i < buf.size(); i++) {
-        // TODO, not sure what this first line does need to double check what binary 1111 is used for in RGB444 conversion
-        // *to++ = buf[i] & std::byte{0xF};
-
-        // https://stackoverflow.com/questions/38557734/how-to-convert-16-bit-hex-color-to-rgb888-values-in-
-        *to++ = buf[i] & (std::byte)0xF8; // r (rrrrr... -> rrrrr000)
-        *to++ = (buf[i] << 5) | (buf[i+1] & (std::byte)0xE0 >> 3); // g (.....ggg ggg..... -> gggggg00)
-        // Got to do it after since it might be unsequencedly modified otherwise
+        *to++ = buf[i] & (std::byte)0b11111000; // r (rrrrr... -> rrrrr000)
+        *to++ = ((buf[i] & (std::byte)0b00000111) << 5) | ((buf[i+1] & (std::byte)0b11100000) >> 3); // g (.....ggg ggg..... -> gggggg00)
+        // Got to do i++ after since i might be unsequencedly modified otherwise
         i++;
-        *to++ = buf[i] << 3; // b (...bbbbb -> bbbbb000)
+        *to++ = (buf[i] & (std::byte)0b00011111) << 3; // b (...bbbbb -> bbbbb000)
     }
+
 
     return true;
 }
@@ -361,22 +361,21 @@ bool FrameBuffer::read_rgb565(std::span<std::byte> buf) {
         return false;
 
     auto& frame_buf = m_bdat->frame_buffers[m_idx];
-    if (buf.size() != frame_buf.data.size())
+    if (buf.size() != frame_buf.data.size() / 3 * 2)
         return false;
     [[maybe_unused]] std::lock_guard lk{frame_buf.data_mut};
 
     const auto* from = frame_buf.data.data();
 
     // We need to convert from 24 bits (3 bytes) into 16 bits (2 bytes)
-    for (auto i = 0; i < buf.size(); i++) {
+    for (auto i = 0; i < buf.size();) {
         // First byte is red, second green and third blue in RGB888
         std::byte r = *from++;
         std::byte g = *from++;
         std::byte b = *from++;
 
-        // https://stackoverflow.com/questions/11471122/rgb888-to-rgb565-bit-shifting
-        buf[i++] = (r & (std::byte)0b11111000) << 8;
-        buf[i] = ((g & (std::byte)0b11111100) << 3) | (b >> 3);
+        buf[i++] = (r & (std::byte)0b11111000) | ((g & (std::byte)0b11100000) >> 5); // rrrrrrrr gggggggg -> rrrrrggg
+        buf[i++] = ((g & (std::byte)0b00000111) << 5) | ((b & (std::byte)0b11111000) >> 3); // gggggggg bbbbbbbb -> gggbbbbb
     }
 
     return true;

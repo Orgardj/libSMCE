@@ -25,7 +25,7 @@
 // clang-format off
 enum SMCE_OV767_Format {
     RGB888, // RRRRRRRRGGGGGGGGBBBBBBBB // SMCE extension
-    RGB565, // TODO
+    RGB565, // RRRRRGGGGGGBBBBB
     RGB444, // GGGGBBBB----RRRR
 };
 
