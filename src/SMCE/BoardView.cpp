@@ -434,20 +434,23 @@ bool FrameBuffer::read_rgb444(std::span<std::byte> buf) {
 }
 
 // converting YUV422 to RGB888
-bool FrameBuffer::write_yuv422(std::span<std::byte> buf) {
+bool FrameBuffer::write_yuv422(std::span<const std::byte> buf) {
     if (!exists())
         return false;
+
     auto& frame_buf = m_bdat->frame_buffers[m_idx];
-    if (buf.size() / 6 != frame_buf.data.size() / 4)
+    if (buf.size() != frame_buf.data.size() / 6 * 4)
         return false;
+
     [[maybe_unused]] std::lock_guard lk{frame_buf.data_mut};
 
-    auto* from = frame_buf.data.data();
+    auto* to = frame_buf.data.data();
+
     for (unsigned int i = 0; i < buf.size();) {
-        auto u = (double)*from++ - 128;
-        auto y1 = (double)*from++ - 16;
-        auto v = (double)*from++ - 128;
-        auto y2 = (double)*from++ - 16;
+        auto u = (double)buf[i++] - 128;
+        auto y1 = (double)buf[i++] - 16;
+        auto v = (double)buf[i++] - 128;
+        auto y2 = (double)buf[i++] - 16;
 
         double r1 = 1.164 * y1 + 1.596 * v;
         double r2 = 1.164 * y2 + 1.596 * v;
@@ -455,12 +458,12 @@ bool FrameBuffer::write_yuv422(std::span<std::byte> buf) {
         double g2 = 1.164 * y2 - 0.392 * u - 0.813 * v;
         double b1 = 1.164 * y1 + 2.017 * u;
         double b2 = 1.164 * y2 + 2.017 * u;
-        buf[i++] = (std::byte)std::clamp(r1, 0.0, 255.0);
-        buf[i++] = (std::byte)std::clamp(r2, 0.0, 255.0);
-        buf[i++] = (std::byte)std::clamp(g1, 0.0, 255.0);
-        buf[i++] = (std::byte)std::clamp(g2, 0.0, 255.0);
-        buf[i++] = (std::byte)std::clamp(b1, 0.0, 255.0);
-        buf[i++] = (std::byte)std::clamp(b2, 0.0, 255.0);
+        *to++ = (std::byte)std::clamp(r1, 0.0, 255.0);
+        *to++ = (std::byte)std::clamp(r2, 0.0, 255.0);
+        *to++ = (std::byte)std::clamp(g1, 0.0, 255.0);
+        *to++ = (std::byte)std::clamp(g2, 0.0, 255.0);
+        *to++ = (std::byte)std::clamp(b1, 0.0, 255.0);
+        *to++ = (std::byte)std::clamp(b2, 0.0, 255.0);
     }
 
     return true;
@@ -475,24 +478,24 @@ bool FrameBuffer::read_yuv422(std::span<std::byte> buf) {
         return false;
     [[maybe_unused]] std::lock_guard lk{frame_buf.data_mut};
 
-    auto* to = frame_buf.data.data();
+    auto* from = frame_buf.data.data();
     for (unsigned int i = 0; i < buf.size();) {
-        auto r1 = (double)buf[i++];
-        auto r2 = (double)buf[i++];
-        auto g1 = (double)buf[i++];
-        auto g2 = (double)buf[i++];
-        auto b1 = (double)buf[i++];
-        auto b2 = (double)buf[i++];
+        auto r1 = (double)*from++;
+        auto r2 = (double)*from++;
+        auto g1 = (double)*from++;
+        auto g2 = (double)*from++;
+        auto b1 = (double)*from++;
+        auto b2 = (double)*from++;
 
         double u = -(0.148 * ((r1 + r2) / 2)) - (0.291 * ((g1 + g2) / 2)) + (0.439 * ((b1 + b2) / 2)) + 128;
         double y1 = (0.257 * r1) + (0.504 * g1) + (0.098 * b1) + 16;
         double v = (0.439 * ((r1 + r2) / 2)) - (0.368 * ((g1 + g2) / 2)) - (0.071 * ((b1 + b2) / 2)) + 128;
         double y2 = (0.257 * r2) + (0.504 * g2) + (0.098 * b2) + 16;
 
-        *to++ = (std::byte)u;
-        *to++ = (std::byte)y1;
-        *to++ = (std::byte)v;
-        *to++ = (std::byte)y2;
+        buf[i++] = (std::byte)u;
+        buf[i++] = (std::byte)y1;
+        buf[i++] = (std::byte)v;
+        buf[i++] = (std::byte)y2;
     }
 
     return true;
