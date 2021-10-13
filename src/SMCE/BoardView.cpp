@@ -345,7 +345,7 @@ bool FrameBuffer::write_rgb565(std::span<const std::byte> buf) {
     auto* to = frame_buf.data.data();
 
     // We need to convert from 16 bits (2 bytes) into 24 bits (3 bytes)
-    for (auto i = 0; i < buf.size(); i++) {
+    for (unsigned int i = 0; i < buf.size(); i++) {
         *to++ = buf[i] & (std::byte)0b11111000; // r (rrrrr... -> rrrrr000)
         *to++ = ((buf[i] & (std::byte)0b00000111) << 5) |
                 ((buf[i + 1] & (std::byte)0b11100000) >> 3); // g (.....ggg ggg..... -> gggggg00)
@@ -369,7 +369,7 @@ bool FrameBuffer::read_rgb565(std::span<std::byte> buf) {
     const auto* from = frame_buf.data.data();
 
     // We need to convert from 24 bits (3 bytes) into 16 bits (2 bytes)
-    for (auto i = 0; i < buf.size();) {
+    for (unsigned int i = 0; i < buf.size();) {
         // First byte is red, second green and third blue in RGB888
         std::byte r = *from++;
         std::byte g = *from++;
@@ -443,7 +443,7 @@ bool FrameBuffer::write_yuv422(std::span<std::byte> buf) {
     [[maybe_unused]] std::lock_guard lk{frame_buf.data_mut};
 
     auto* from = frame_buf.data.data();
-    for (auto i = 0; i < buf.size();) {
+    for (unsigned int i = 0; i < buf.size();) {
         auto u = (double)*from++ - 128;
         auto y1 = (double)*from++ - 16;
         auto v = (double)*from++ - 128;
@@ -476,7 +476,7 @@ bool FrameBuffer::read_yuv422(std::span<std::byte> buf) {
     [[maybe_unused]] std::lock_guard lk{frame_buf.data_mut};
 
     auto* to = frame_buf.data.data();
-    for (auto i = 0; i < buf.size();) {
+    for (unsigned int i = 0; i < buf.size();) {
         auto r1 = (double)buf[i++];
         auto r2 = (double)buf[i++];
         auto g1 = (double)buf[i++];
