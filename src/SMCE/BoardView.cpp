@@ -20,6 +20,7 @@
 
 #include <algorithm>
 #include <iterator>
+#include <iostream>
 #include <mutex>
 #include <boost/date_time/microsec_time_clock.hpp>
 #include <boost/date_time/posix_time/posix_time_duration.hpp>
@@ -453,17 +454,18 @@ bool FrameBuffer::write_yuv422(std::span<const std::byte> buf) {
         auto y2 = (double)buf[i++] - 16;
 
         double r1 = 1.164 * y1 + 1.596 * v;
-        double r2 = 1.164 * y2 + 1.596 * v;
         double g1 = 1.164 * y1 - 0.392 * u - 0.813 * v;
-        double g2 = 1.164 * y2 - 0.392 * u - 0.813 * v;
         double b1 = 1.164 * y1 + 2.017 * u;
+        double r2 = 1.164 * y2 + 1.596 * v;
+        double g2 = 1.164 * y2 - 0.392 * u - 0.813 * v;
         double b2 = 1.164 * y2 + 2.017 * u;
-        *to++ = (std::byte)std::clamp(r1, 0.0, 255.0);
-        *to++ = (std::byte)std::clamp(r2, 0.0, 255.0);
-        *to++ = (std::byte)std::clamp(g1, 0.0, 255.0);
-        *to++ = (std::byte)std::clamp(g2, 0.0, 255.0);
-        *to++ = (std::byte)std::clamp(b1, 0.0, 255.0);
-        *to++ = (std::byte)std::clamp(b2, 0.0, 255.0);
+
+        *to++ = (std::byte)std::round(std::clamp(r1, 0.0, 255.0));
+        *to++ = (std::byte)std::round(std::clamp(g1, 0.0, 255.0));
+        *to++ = (std::byte)std::round(std::clamp(b1, 0.0, 255.0));
+        *to++ = (std::byte)std::round(std::clamp(r2, 0.0, 255.0));
+        *to++ = (std::byte)std::round(std::clamp(g2, 0.0, 255.0));
+        *to++ = (std::byte)std::round(std::clamp(b2, 0.0, 255.0));
     }
 
     return true;
@@ -481,10 +483,10 @@ bool FrameBuffer::read_yuv422(std::span<std::byte> buf) {
     auto* from = frame_buf.data.data();
     for (unsigned int i = 0; i < buf.size();) {
         auto r1 = (double)*from++;
-        auto r2 = (double)*from++;
         auto g1 = (double)*from++;
-        auto g2 = (double)*from++;
         auto b1 = (double)*from++;
+        auto r2 = (double)*from++;
+        auto g2 = (double)*from++;
         auto b2 = (double)*from++;
 
         double u = -(0.148 * ((r1 + r2) / 2)) - (0.291 * ((g1 + g2) / 2)) + (0.439 * ((b1 + b2) / 2)) + 128;
