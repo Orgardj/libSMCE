@@ -1,6 +1,6 @@
-| Name                       | Task ID            | Contribution in %     |
-| :------------------------- | :----------------- | :-------------------- |
-| Dinesh Bhandari            | T1 <br> T6                | 100% <br> 25%                 |
-| Iswarya Malleswaran        | T3 <br> T6                | ??? <br> 25%                  |
-| Jonathan Örgård            | T2 <br> T3 <br> T5 <br> T6| 50% <br> 60% <br> ??? <br> 25% |
-| Priyadarshini Vaidyanathan | T4 <br> T6                | ??? <br> 25%                   |
+| Name                       | Task ID                            | Contribution in %                         |
+| :------------------------- | :--------------------------------- | :---------------------------------------- |
+| Dinesh Bhandari            | T1 <br> T2                         | 25% <br> 100%                             |
+| Iswarya Malleswaran        | T1 <br> T5 <br> T6                 | 25% <br> 50% <br> ???                     |
+| Jonathan Örgård            | T1 <br> T3 <br> T4 <br> T5 <br> T8 | 25% <br> 100% <br> 100% <br> 50% <br> ??? |
+| Priyadarshini Vaidyanathan | T1 <br> T7                         | 25% <br> 100%                             |
