@@ -63,6 +63,7 @@ int OV767X::begin(SMCE_OV767_Resolution resolution, SMCE_OV767_Format format, in
         return -1;
     }
     switch (format) {
+    case YUV422:
     case RGB888:
     case RGB565:
     case RGB444:
@@ -141,10 +142,11 @@ void OV767X::readFrame(void* buffer) {
         return;
     }
     using ReadType = std::add_const_t<decltype(&smce::FrameBuffer::read_rgb888)>;
-    constexpr ReadType format_read[3] = {
+    constexpr ReadType format_read[4] = {
         &smce::FrameBuffer::read_rgb888,
         &smce::FrameBuffer::read_rgb565,
         &smce::FrameBuffer::read_rgb444,
+        &smce::FrameBuffer::read_yuv422,
     };
     (smce::board_view.frame_buffers[m_key].*format_read[m_format])(
         {static_cast<std::byte*>(buffer), static_cast<std::size_t>(bitsPerPixel() * width() * height() / CHAR_BIT)});
