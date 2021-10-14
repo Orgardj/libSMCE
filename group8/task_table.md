@@ -7,4 +7,12 @@
 | T5      | Additional Pixel format YUV422            | small                                                                 | 1 file modified (+67 LOC)                                                                                                                                                                                                                                                                                          |
 | T6      | LibSMCE unit test YUV422                  | small                                                                 | 1 file modified (+?? LOC)                                                                                                                                                                                                                                                                                          |
 | T7      | Autoinstall CMake                         | small                                                                 |                                                                                                                                                                                                                                                                                                                    |
-| T8      | Individual Milestone 3                    | small                                                                 |                                                                                                                                                                                                                                                                                                                    |
+| T8      | Individual Milestone 3                    | small                                                                 |                                                                                                                                                                                                                                            
+|T9   | Individual Milestone 1                  | small                                                                 |   
+|T10  | Brainstroming Session for IM1     
+|T11  | Braistroming session for IM2    
+|T12  | Discussion sessions for GM1  
+|T13  | Discussion session for  GM2
+|T14  | Project comprehension 
+
+
