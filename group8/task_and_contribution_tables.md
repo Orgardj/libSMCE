@@ -11,7 +11,7 @@
 | :------ | :---------------------------------------- | :-------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | T1      | Meetings with customer                    | small    |                                                     |
 | T2      | Refactor the camera controller in smce-gd | small    |                                                     |
-| T3      | Additional Pixel format RGB565            | small    | 6 files modified (+164 LOC; -1 LOC)                 |
+| T3      | Additional Pixel format RGB565            | small    | 6 files modified (+64 LOC; -1 LOC)                  |
 | T4      | LibSMCE unit test RGB565                  | small    | 1 file modified (+92 LOC)                           |
 | T5      | Additional Pixel format YUV422            | small    | 6 file modified (+78 LOC; -1 LOC)                   |
 | T6      | LibSMCE unit test YUV422                  | small    | 1 file modified (+92 LOC)                           |
