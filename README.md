@@ -7,7 +7,7 @@ TODO CHANGE BACK
 ![Build](https://github.com/ItJustWorksTM/libSMCE/workflows/Build/badge.svg?branch=master)
 [![codecov](https://codecov.io/gh/ItJustWorksTM/libSMCE/branch/master/graph/badge.svg?token=0Q5P5TVW4N)](https://codecov.io/gh/ItJustWorksTM/libSMCE)
  -->
- ![Build](https://github.com/group8-dat265/workflows/Build/badge.svg?branch=master)
+ ![Build](https://github.com/group8-dat265/libSMCE/workflows/Build/badge.svg?branch=master)
  [![codecov](https://codecov.io/gh/group8-dat265/libSMCE/branch/master/graph/badge.svg?token=N4QXJA61LU)](https://codecov.io/gh/group8-dat265/libSMCE)
 
 Status: _Actively maintained_
