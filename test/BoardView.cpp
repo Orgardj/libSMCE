@@ -244,6 +244,7 @@ TEST_CASE("BoardView RGB444 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
+    REQUIRE(br.resume());
     REQUIRE(br.stop());
 }
 
@@ -337,6 +338,7 @@ TEST_CASE("BoardView RGB565 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
+    REQUIRE(br.resume());
     REQUIRE(br.stop());
 }
 
@@ -430,5 +432,6 @@ TEST_CASE("BoardView YUV422 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
+    REQUIRE(br.resume());
     REQUIRE(br.stop());
 }
