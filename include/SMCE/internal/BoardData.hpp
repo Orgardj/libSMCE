@@ -150,8 +150,9 @@ struct SMCE_INTERNAL BoardData {
         };
         enum PixelFormat : std::uint8_t {
             RGB888,
-            RGB444,
             RGB565,
+            RGB444,
+            YUV422,
         };
         // clang-format on
         struct Transform {
