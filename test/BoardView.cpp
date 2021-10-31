@@ -179,7 +179,7 @@ TEST_CASE("BoardView RGB444 cvt", "[BoardView]") {
 
         constexpr std::array in = {'\xBC'_b, '\x0A'_b};
         constexpr std::array expected_out = {'\xA0'_b, '\xB0'_b, '\xC0'_b};
-        static_assert(in.size() == expected_out.size() / 3 * 2);
+        REQUIRE(in.size() == expected_out.size() / 3 * 2);
 
         fb.set_height(height);
         fb.set_width(width);
@@ -197,7 +197,7 @@ TEST_CASE("BoardView RGB444 cvt", "[BoardView]") {
         constexpr std::array in = {'\x23'_b, '\xF1'_b, '\x56'_b, '\xF4'_b, '\x89'_b, '\xF7'_b, '\xBC'_b, '\xFA'_b};
         constexpr std::array expected_out = {'\x10'_b, '\x20'_b, '\x30'_b, '\x40'_b, '\x50'_b, '\x60'_b,
                                              '\x70'_b, '\x80'_b, '\x90'_b, '\xA0'_b, '\xB0'_b, '\xC0'_b};
-        static_assert(in.size() == expected_out.size() / 3 * 2);
+        REQUIRE(in.size() == expected_out.size() / 3 * 2);
 
         fb.set_height(height);
         fb.set_width(width);
@@ -212,9 +212,20 @@ TEST_CASE("BoardView RGB444 cvt", "[BoardView]") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 1;
 
+        constexpr std::array in = {'\xBC'_b};
+
+        fb.set_height(height);
+        fb.set_width(width);
+        REQUIRE_FALSE(fb.write_rgb444(in));
+    }
+
+    {
+        constexpr std::size_t height = 1;
+        constexpr std::size_t width = 1;
+
         constexpr std::array in = {'\xAD'_b, '\xBE'_b, '\xCF'_b};
         constexpr std::array expected_out = {'\xBC'_b, '\x0A'_b};
-        static_assert(expected_out.size() == in.size() / 3 * 2);
+        REQUIRE(expected_out.size() == in.size() / 3 * 2);
 
         fb.set_height(height);
         fb.set_width(width);
@@ -233,7 +244,7 @@ TEST_CASE("BoardView RGB444 cvt", "[BoardView]") {
                                    '\x7A'_b, '\x8B'_b, '\x9C'_b, '\xAD'_b, '\xBE'_b, '\xCF'_b};
         constexpr std::array expected_out = {'\x23'_b, '\x01'_b, '\x56'_b, '\x04'_b,
                                              '\x89'_b, '\x07'_b, '\xBC'_b, '\x0A'_b};
-        static_assert(expected_out.size() == in.size() / 3 * 2);
+        REQUIRE(expected_out.size() == in.size() / 3 * 2);
 
         fb.set_height(height);
         fb.set_width(width);
@@ -242,6 +253,20 @@ TEST_CASE("BoardView RGB444 cvt", "[BoardView]") {
         std::array<std::byte, std::size(expected_out)> out;
         fb.read_rgb444(out);
         REQUIRE(out == expected_out);
+    }
+
+    {
+        constexpr std::size_t height = 1;
+        constexpr std::size_t width = 1;
+
+        constexpr std::array in = {'\xAD'_b, '\xBE'_b, '\xCF'_b};
+
+        fb.set_height(height);
+        fb.set_width(width);
+        REQUIRE(fb.write_rgb888(in));
+
+        std::array<std::byte, 1> out;
+        REQUIRE_FALSE(fb.read_rgb444(out));
     }
 
     REQUIRE(br.resume());
@@ -273,7 +298,7 @@ TEST_CASE("BoardView RGB565 cvt", "[BoardView]") {
 
         constexpr std::array in = {'\xBC'_b, '\x0A'_b};
         constexpr std::array expected_out = {'\xB8'_b, '\x80'_b, '\x50'_b};
-        static_assert(in.size() == expected_out.size() / 3 * 2);
+        REQUIRE(in.size() == expected_out.size() / 3 * 2);
 
         fb.set_height(height);
         fb.set_width(width);
@@ -291,7 +316,7 @@ TEST_CASE("BoardView RGB565 cvt", "[BoardView]") {
         constexpr std::array in = {'\x23'_b, '\xF1'_b, '\x56'_b, '\xF4'_b, '\x89'_b, '\xF7'_b, '\xBC'_b, '\xFA'_b};
         constexpr std::array expected_out = {'\x20'_b, '\x7C'_b, '\x88'_b, '\x50'_b, '\xDC'_b, '\xA0'_b,
                                              '\x88'_b, '\x3C'_b, '\xB8'_b, '\xB8'_b, '\x9C'_b, '\xD0'_b};
-        static_assert(in.size() == expected_out.size() / 3 * 2);
+        REQUIRE(in.size() == expected_out.size() / 3 * 2);
 
         fb.set_height(height);
         fb.set_width(width);
@@ -306,9 +331,20 @@ TEST_CASE("BoardView RGB565 cvt", "[BoardView]") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 1;
 
+        constexpr std::array in = {'\xBC'_b};
+
+        fb.set_height(height);
+        fb.set_width(width);
+        REQUIRE_FALSE(fb.write_rgb565(in));
+    }
+
+    {
+        constexpr std::size_t height = 1;
+        constexpr std::size_t width = 1;
+
         constexpr std::array in = {'\xAD'_b, '\xBE'_b, '\xCF'_b};
         constexpr std::array expected_out = {'\xAD'_b, '\xD9'_b};
-        static_assert(expected_out.size() == in.size() / 3 * 2);
+        REQUIRE(expected_out.size() == in.size() / 3 * 2);
 
         fb.set_height(height);
         fb.set_width(width);
@@ -327,7 +363,7 @@ TEST_CASE("BoardView RGB565 cvt", "[BoardView]") {
                                    '\x7A'_b, '\x8B'_b, '\x9C'_b, '\xAD'_b, '\xBE'_b, '\xCF'_b};
         constexpr std::array expected_out = {'\x19'_b, '\x67'_b, '\x4A'_b, '\xCD'_b,
                                              '\x7C'_b, '\x73'_b, '\xAD'_b, '\xD9'_b};
-        static_assert(expected_out.size() == in.size() / 3 * 2);
+        REQUIRE(expected_out.size() == in.size() / 3 * 2);
 
         fb.set_height(height);
         fb.set_width(width);
@@ -336,6 +372,20 @@ TEST_CASE("BoardView RGB565 cvt", "[BoardView]") {
         std::array<std::byte, std::size(expected_out)> out;
         fb.read_rgb565(out);
         REQUIRE(out == expected_out);
+    }
+
+    {
+        constexpr std::size_t height = 1;
+        constexpr std::size_t width = 1;
+
+        constexpr std::array in = {'\xAD'_b, '\xBE'_b, '\xCF'_b};
+
+        fb.set_height(height);
+        fb.set_width(width);
+        REQUIRE(fb.write_rgb888(in));
+
+        std::array<std::byte, 1> out;
+        REQUIRE_FALSE(fb.read_rgb565(out));
     }
 
     REQUIRE(br.resume());
@@ -367,7 +417,7 @@ TEST_CASE("BoardView YUV422 cvt", "[BoardView]") {
 
         constexpr std::array in = {'\xBC'_b, '\x0A'_b, '\xAB'_b, '\x1F'_b};
         constexpr std::array expected_out = {'\x3E'_b, '\x00'_b, '\x72'_b, '\x56'_b, '\x00'_b, '\x8A'_b};
-        static_assert(in.size() == expected_out.size() / 6 * 4);
+        REQUIRE(in.size() == expected_out.size() / 6 * 4);
 
         fb.set_height(height);
         fb.set_width(width);
@@ -385,7 +435,7 @@ TEST_CASE("BoardView YUV422 cvt", "[BoardView]") {
         constexpr std::array in = {'\x23'_b, '\xF1'_b, '\x56'_b, '\xF4'_b, '\x89'_b, '\xF7'_b, '\xBC'_b, '\xFA'_b};
         constexpr std::array expected_out = {'\xC3'_b, '\xFF'_b, '\x4A'_b, '\xC6'_b, '\xFF'_b, '\x4E'_b,
                                              '\xFF'_b, '\xD9'_b, '\xFF'_b, '\xFF'_b, '\xDC'_b, '\xFF'_b};
-        static_assert(in.size() == expected_out.size() / 6 * 4);
+        REQUIRE(in.size() == expected_out.size() / 6 * 4);
 
         fb.set_height(height);
         fb.set_width(width);
@@ -400,9 +450,20 @@ TEST_CASE("BoardView YUV422 cvt", "[BoardView]") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 2;
 
+        constexpr std::array in = {'\xBC'_b, '\x0A'_b, '\xAB'_b,};
+
+        fb.set_height(height);
+        fb.set_width(width);
+        REQUIRE_FALSE(fb.write_yuv422(in));
+    }
+
+    {
+        constexpr std::size_t height = 1;
+        constexpr std::size_t width = 2;
+
         constexpr std::array in = {'\xAD'_b, '\xD9'_b, '\xAB'_b, '\xD8'_b, '\xAB'_b, '\xD6'_b};
         constexpr std::array expected_out = {'\x7F'_b, '\xBA'_b, '\x80'_b, '\xB2'_b};
-        static_assert(expected_out.size() == in.size() / 6 * 4);
+        REQUIRE(expected_out.size() == in.size() / 6 * 4);
 
         fb.set_height(height);
         fb.set_width(width);
@@ -421,7 +482,7 @@ TEST_CASE("BoardView YUV422 cvt", "[BoardView]") {
                                    '\x7A'_b, '\x8B'_b, '\x9C'_b, '\xAD'_b, '\xBE'_b, '\xCF'_b};
         constexpr std::array expected_out = {'\x89'_b, '\x32'_b, '\x77'_b, '\x5E'_b,
                                              '\x89'_b, '\x84'_b, '\x77'_b, '\xB0'_b};
-        static_assert(expected_out.size() == in.size() / 6 * 4);
+        REQUIRE(expected_out.size() == in.size() / 6 * 4);
 
         fb.set_height(height);
         fb.set_width(width);
@@ -430,6 +491,20 @@ TEST_CASE("BoardView YUV422 cvt", "[BoardView]") {
         std::array<std::byte, std::size(expected_out)> out;
         fb.read_yuv422(out);
         REQUIRE(out == expected_out);
+    }
+
+    {
+        constexpr std::size_t height = 1;
+        constexpr std::size_t width = 2;
+
+        constexpr std::array in = {'\xAD'_b, '\xD9'_b, '\xAB'_b, '\xD8'_b, '\xAB'_b, '\xD6'_b};
+
+        fb.set_height(height);
+        fb.set_width(width);
+        REQUIRE(fb.write_rgb888(in));
+
+        std::array<std::byte, 1> out;
+        REQUIRE_FALSE(fb.read_yuv422(out));
     }
 
     REQUIRE(br.resume());
