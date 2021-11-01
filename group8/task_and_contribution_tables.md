@@ -114,7 +114,7 @@
     </tr>
     <!-- Jonathan -->
     <tr>
-        <td rowspan="12">Jonathan Örgård</td>
+        <td rowspan="14">Jonathan Örgård</td>
         <td>T1</td><td>25%</td>
     </tr>
     <tr>
