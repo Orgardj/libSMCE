@@ -25,6 +25,8 @@
 | T14     | Project comprehension                     | medium   | Extra difficult for our team since we had no C++ experience |
 | T15     | Agile methodology / Trello                | small    | Meetings to discuss way of wokring                          |
 | T16     | Sonar Cloud                               | small    | Deploy Sounar Cloud CI                                      |
+| T17     | CodeCov                                   | small    | Change CodeCov CI to work with our repo                     |
+| T18     | Improvde code coverge BoardView           | small    | 1 file modified (+172 LOC; −12 LOC)                         |
 
 
 <table>
@@ -148,6 +150,12 @@
     </tr>
     <tr>
         <td>T15</td><td>25%</td>
+    </tr>
+    <tr>
+        <td>T17</td><td>100%</td>
+    </tr>
+    <tr>
+        <td>T18</td><td>100%</td>
     </tr>
     <!-- Priyadarshini -->
     <tr>
