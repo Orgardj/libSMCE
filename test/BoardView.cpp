@@ -193,11 +193,15 @@ TEST_CASE("BoardView RGB444 cvt", "[BoardView]") {
         fb.set_height(height);
         fb.set_width(width);
         REQUIRE(fb.write_rgb444(in));
+        REQUIRE_FALSE(fb2.write_rgb444(in));
 
         std::array<std::byte, std::size(expected_out)> out;
         REQUIRE(fb.read_rgb888(out));
         REQUIRE_FALSE(fb2.read_rgb888(out));
         REQUIRE(out == expected_out);
+
+        std::array<std::byte, 1> out2;
+        REQUIRE_FALSE(fb.read_rgb888(out2));
     }
 
     {
@@ -244,6 +248,7 @@ TEST_CASE("BoardView RGB444 cvt", "[BoardView]") {
 
         std::array<std::byte, std::size(expected_out)> out;
         REQUIRE(fb.read_rgb444(out));
+        REQUIRE_FALSE(fb2.read_rgb444(out));
         REQUIRE(out == expected_out);
     }
 
@@ -278,6 +283,9 @@ TEST_CASE("BoardView RGB444 cvt", "[BoardView]") {
 
         std::array<std::byte, 1> out;
         REQUIRE_FALSE(fb.read_rgb444(out));
+
+        constexpr std::array in2 = {'\xAD'_b, '\xBE'_b};
+        REQUIRE_FALSE(fb.write_rgb888(in2));
     }
 
     REQUIRE(br.resume());
