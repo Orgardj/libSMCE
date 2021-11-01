@@ -544,6 +544,12 @@ TEST_CASE("BoardView FrameBuffer others", "[BoardView]") {
         REQUIRE(fb.needs_vertical_flip());
         fb.needs_horizontal_flip(true);
         REQUIRE(fb.needs_horizontal_flip());
+
+        // TODO Check what a real freq could be
+        fb.set_freq(5);
+        REQUIRE(fb.get_freq() == 5);
+
+        std::cout << "test" << fb.get_freq();
     }
 
     REQUIRE(br.resume());
