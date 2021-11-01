@@ -576,11 +576,11 @@ TEST_CASE("BoardView FrameBuffer others", "[BoardView]") {
         REQUIRE_FALSE(fb2.get_width());
 
         fb.needs_vertical_flip(true);
+        fb2.needs_vertical_flip(true);
         REQUIRE(fb.needs_vertical_flip());
-        REQUIRE_FALSE(fb2.needs_vertical_flip());
         fb.needs_horizontal_flip(true);
+        fb2.needs_horizontal_flip(true);
         REQUIRE(fb.needs_horizontal_flip());
-        REQUIRE_FALSE(fb2.needs_horizontal_flip());
 
         // TODO Check what a real freq could be
         REQUIRE(fb.get_freq() == 0);
