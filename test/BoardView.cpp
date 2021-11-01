@@ -123,6 +123,8 @@ TEST_CASE("BoardView UART", "[BoardView]") {
     std::array<char, out.size()> in{};
     REQUIRE(uart0.rx().front() == '\0');
     REQUIRE(uart0.rx().write(out) == out.size());
+    REQUIRE_FALSE(uart1.rx().write(out));
+
     int ticks = 16'000;
     do {
         if (ticks-- == 0)
@@ -585,6 +587,8 @@ TEST_CASE("BoardView FrameBuffer others", "[BoardView]") {
         fb.set_freq(5);
         fb2.set_freq(5);
         REQUIRE(fb.get_freq() == 5);
+
+        REQUIRE(fb.direction() == smce::FrameBuffer::Direction::in);
     }
 
     REQUIRE(br.resume());
