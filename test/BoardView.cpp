@@ -109,14 +109,19 @@ TEST_CASE("BoardView UART", "[BoardView]") {
     REQUIRE(uart0.exists());
     REQUIRE(uart0.rx().exists());
     REQUIRE(uart0.tx().exists());
+    REQUIRE(uart0.rx().max_size() == 64);
+    REQUIRE(uart0.tx().max_size() == 64);
     auto uart1 = bv.uart_channels[1];
     REQUIRE_FALSE(uart1.exists());
     REQUIRE_FALSE(uart1.rx().exists());
     REQUIRE_FALSE(uart1.tx().exists());
+    REQUIRE_FALSE(uart1.rx().size());
+    REQUIRE_FALSE(uart1.tx().size());
     std::this_thread::sleep_for(1ms);
 
     std::array out = {'H', 'E', 'L', 'L', 'O', ' ', 'U', 'A', 'R', 'T', '\0'};
     std::array<char, out.size()> in{};
+    REQUIRE(uart0.rx().front() == '\0');
     REQUIRE(uart0.rx().write(out) == out.size());
     int ticks = 16'000;
     do {
@@ -129,6 +134,8 @@ TEST_CASE("BoardView UART", "[BoardView]") {
     REQUIRE(uart0.tx().front() == '\0');
     REQUIRE(uart0.tx().size() == 0);
     REQUIRE(in == out);
+    REQUIRE_FALSE(uart1.tx().read(in));
+    REQUIRE_FALSE(uart1.tx().front());
 
 #if !MSVC_DEBUG
     std::reverse(out.begin(), out.end());
@@ -172,6 +179,8 @@ TEST_CASE("BoardView RGB444 cvt", "[BoardView]") {
     REQUIRE(br.suspend());
     auto fb = bv.frame_buffers[0];
     REQUIRE(fb.exists());
+    auto fb2 = bv.frame_buffers[1];
+    REQUIRE_FALSE(fb2.exists());
 
     {
         constexpr std::size_t height = 1;
@@ -187,6 +196,7 @@ TEST_CASE("BoardView RGB444 cvt", "[BoardView]") {
 
         std::array<std::byte, std::size(expected_out)> out;
         REQUIRE(fb.read_rgb888(out));
+        REQUIRE_FALSE(fb2.read_rgb888(out));
         REQUIRE(out == expected_out);
     }
 
@@ -230,6 +240,7 @@ TEST_CASE("BoardView RGB444 cvt", "[BoardView]") {
         fb.set_height(height);
         fb.set_width(width);
         REQUIRE(fb.write_rgb888(in));
+        REQUIRE_FALSE(fb2.write_rgb888(in));
 
         std::array<std::byte, std::size(expected_out)> out;
         REQUIRE(fb.read_rgb444(out));
@@ -291,6 +302,8 @@ TEST_CASE("BoardView RGB565 cvt", "[BoardView]") {
     REQUIRE(br.suspend());
     auto fb = bv.frame_buffers[0];
     REQUIRE(fb.exists());
+    auto fb2 = bv.frame_buffers[1];
+    REQUIRE_FALSE(fb2.exists());
 
     {
         constexpr std::size_t height = 1;
@@ -303,6 +316,7 @@ TEST_CASE("BoardView RGB565 cvt", "[BoardView]") {
         fb.set_height(height);
         fb.set_width(width);
         REQUIRE(fb.write_rgb565(in));
+        REQUIRE_FALSE(fb2.write_rgb565(in));
 
         std::array<std::byte, std::size(expected_out)> out;
         REQUIRE(fb.read_rgb888(out));
@@ -352,6 +366,7 @@ TEST_CASE("BoardView RGB565 cvt", "[BoardView]") {
 
         std::array<std::byte, std::size(expected_out)> out;
         REQUIRE(fb.read_rgb565(out));
+        REQUIRE_FALSE(fb2.read_rgb565(out));
         REQUIRE(out == expected_out);
     }
 
@@ -410,6 +425,8 @@ TEST_CASE("BoardView YUV422 cvt", "[BoardView]") {
     REQUIRE(br.suspend());
     auto fb = bv.frame_buffers[0];
     REQUIRE(fb.exists());
+    auto fb2 = bv.frame_buffers[1];
+    REQUIRE_FALSE(fb2.exists());
 
     {
         constexpr std::size_t height = 1;
@@ -422,6 +439,7 @@ TEST_CASE("BoardView YUV422 cvt", "[BoardView]") {
         fb.set_height(height);
         fb.set_width(width);
         REQUIRE(fb.write_yuv422(in));
+        REQUIRE_FALSE(fb2.write_yuv422(in));
 
         std::array<std::byte, std::size(expected_out)> out;
         REQUIRE(fb.read_rgb888(out));
@@ -471,6 +489,7 @@ TEST_CASE("BoardView YUV422 cvt", "[BoardView]") {
 
         std::array<std::byte, std::size(expected_out)> out;
         REQUIRE(fb.read_yuv422(out));
+        REQUIRE_FALSE(fb2.read_yuv422(out));
         REQUIRE(out == expected_out);
     }
 
@@ -529,6 +548,8 @@ TEST_CASE("BoardView FrameBuffer others", "[BoardView]") {
     REQUIRE(br.suspend());
     auto fb = bv.frame_buffers[0];
     REQUIRE(fb.exists());
+    auto fb2 = bv.frame_buffers[1];
+    REQUIRE_FALSE(fb2.exists());
 
     {
         constexpr std::size_t height = 1;
@@ -536,18 +557,25 @@ TEST_CASE("BoardView FrameBuffer others", "[BoardView]") {
 
         fb.set_height(height);
         fb.set_width(width);
+        fb2.set_height(height);
+        fb2.set_width(width);
 
         REQUIRE(fb.get_height() == height);
+        REQUIRE_FALSE(fb2.get_height());
         REQUIRE(fb.get_width() == width);
+        REQUIRE_FALSE(fb2.get_width());
 
         fb.needs_vertical_flip(true);
         REQUIRE(fb.needs_vertical_flip());
+        REQUIRE_FALSE(fb2.needs_vertical_flip());
         fb.needs_horizontal_flip(true);
         REQUIRE(fb.needs_horizontal_flip());
+        REQUIRE_FALSE(fb2.needs_horizontal_flip());
 
         // TODO Check what a real freq could be
         REQUIRE(fb.get_freq() == 0);
         fb.set_freq(5);
+        fb2.set_freq(5);
         REQUIRE(fb.get_freq() == 5);
     }
 
