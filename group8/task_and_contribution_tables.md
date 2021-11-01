@@ -27,6 +27,7 @@
 | T16     | Sonar Cloud                               | small    | Deploy Sounar Cloud CI                                      |
 | T17     | CodeCov                                   | small    | Change CodeCov CI to work with our repo                     |
 | T18     | Improvde code coverge BoardView           | small    | 1 file modified (+172 LOC; −12 LOC), BoardView.cpp coverage +17.73%, total +3.21% coverge |
+| T19     | Improvde code coverge Board               | small    | 1 file modified (+26 LOC; −1 LOC), Board.cpp coverage +10.30%, total +0.47% coverge |
 
 
 <table>
@@ -114,7 +115,7 @@
     </tr>
     <!-- Jonathan -->
     <tr>
-        <td rowspan="14">Jonathan Örgård</td>
+        <td rowspan="15">Jonathan Örgård</td>
         <td>T1</td><td>25%</td>
     </tr>
     <tr>
@@ -156,6 +157,9 @@
     </tr>
     <tr>
         <td>T18</td><td>100%</td>
+    </tr>
+    <tr>
+        <td>T19</td><td>100%</td>
     </tr>
     <!-- Priyadarshini -->
     <tr>
