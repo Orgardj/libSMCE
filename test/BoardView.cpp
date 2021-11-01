@@ -450,7 +450,7 @@ TEST_CASE("BoardView YUV422 cvt", "[BoardView]") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 2;
 
-        constexpr std::array in = {'\xBC'_b, '\x0A'_b, '\xAB'_b,};
+        constexpr std::array in = {'\xBC'_b, '\x0A'_b, '\xAB'_b};
 
         fb.set_height(height);
         fb.set_width(width);
@@ -505,6 +505,45 @@ TEST_CASE("BoardView YUV422 cvt", "[BoardView]") {
 
         std::array<std::byte, 1> out;
         REQUIRE_FALSE(fb.read_yuv422(out));
+    }
+
+    REQUIRE(br.resume());
+    REQUIRE(br.stop());
+}
+
+TEST_CASE("BoardView FrameBuffer others", "[BoardView]") {
+    smce::Toolchain tc{SMCE_PATH};
+    REQUIRE(!tc.check_suitable_environment());
+    smce::Sketch sk{SKETCHES_PATH "noop", {.fqbn = "arduino:avr:nano"}};
+    const auto ec = tc.compile(sk);
+    if (ec)
+        std::cerr << tc.build_log().second;
+    REQUIRE_FALSE(ec);
+    smce::Board br{};
+    REQUIRE(br.configure({.frame_buffers = {{}}}));
+    REQUIRE(br.attach_sketch(sk));
+    REQUIRE(br.prepare());
+    auto bv = br.view();
+    REQUIRE(bv.valid());
+    REQUIRE(br.start());
+    REQUIRE(br.suspend());
+    auto fb = bv.frame_buffers[0];
+    REQUIRE(fb.exists());
+
+    {
+        constexpr std::size_t height = 1;
+        constexpr std::size_t width = 1;
+
+        fb.set_height(height);
+        fb.set_width(width);
+
+        REQUIRE(fb.get_height() == height);
+        REQUIRE(fb.get_width() == width);
+
+        fb.needs_vertical_flip(true);
+        REQUIRE(fb.needs_vertical_flip());
+        fb.needs_horizontal_flip(true);
+        REQUIRE(fb.needs_horizontal_flip());
     }
 
     REQUIRE(br.resume());
