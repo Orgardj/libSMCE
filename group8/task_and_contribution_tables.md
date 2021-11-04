@@ -203,9 +203,10 @@
         <td>T14</td><td>25%</td>
     </tr>
     <tr>
-        <td>T15</td><td>25%</td>
-    </tr>
-    <tr>
         <td>T20</td><td>50%</td>
     </tr>
+    <tr>
+        <td>T15</td><td>25%</td>
+    </tr>
+    
 </table>
