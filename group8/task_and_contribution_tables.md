@@ -26,7 +26,7 @@
 | T15     | Agile methodology / Trello                | small    | Meetings to discuss way of wokring                                                         |
 | T16     | Sonar Cloud                               | small    | Deploy Sounar Cloud CI                                                                     |
 | T17     | CodeCov                                   | small    | Change CodeCov CI to work with our repo                                                    |
-| T18     | Improvde code coverge BoardView           | small    | 1 file modified (+172 LOC; −12 LOC), BoardView.cpp +17.73% coverage, total +3.21% coverage |
+| T18     | Improvde code coverge BoardView           | small    | 1 file modified (+172 LOC; −12 LOC), BoardView.cpp +17.73% coverage, total +2.75% coverage |
 | T19     | Improvde code coverge Board               | small    | 1 file modified (+26 LOC; −1 LOC), Board.cpp +10.30% coverage, total +0.47% coverage       |
 | T20     | Cygwin support                            | medium   | Compile & run SMCE on Cygwin                                                               |
 
