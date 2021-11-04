@@ -109,12 +109,7 @@ class SMCE_API VirtualPins {
     friend constexpr bool operator==(const VirtualPins& lhs, const VirtualPins& rhs) noexcept;
 
   public:
-    // struct Iterator;
-
     [[nodiscard]] VirtualPin operator[](std::size_t idx) noexcept;
-    // [[nodiscard]] Iterator begin() noexcept;
-    // [[nodiscard]] Iterator end() noexcept;
-    // [[nodiscard]] std::size_t size() noexcept;
 };
 
 constexpr bool operator==(const VirtualPins& lhs, const VirtualPins& rhs) noexcept { return lhs.m_bdat == rhs.m_bdat; }
@@ -284,8 +279,6 @@ constexpr bool operator==(const FrameBuffers& lhs, const FrameBuffers& rhs) noex
  * \note Must stay a no-fail interface (operations all silently fail on error and never cause UB)
  **/
 class SMCE_API BoardView {
-    BoardData* m_bdat{};
-
     friend BoardDeviceView;
     friend constexpr bool operator==(const BoardView& lhs, const BoardView& rhs) noexcept;
 
@@ -298,10 +291,9 @@ class SMCE_API BoardView {
     };
     // clang-format on
 
+    BoardData* m_bdat{};
     VirtualPins pins{m_bdat};           /// GPIO pins
     VirtualUarts uart_channels{m_bdat}; /// UART channels
-    // VirtualI2cs i2c_buses;
-    // VirtualOpaqueDevices opaque_devices;
     FrameBuffers frame_buffers{m_bdat}; /// Camera/Screen frame-buffers
 
     constexpr BoardView() noexcept = default;
