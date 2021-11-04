@@ -4,7 +4,7 @@
 | Dinesh Bhandari            | T1 <br> T2 <br> T8 <br> T9 <br> T10 <br> T11 <br> T12 <br> T13                 | 25% <br> 100%<br> 25% <br>25%<br>25%<br>25%<br>25%<br>25%                        |                          |
 | Iswarya Malleswaran        | T1 <br> T5 <br> T6 <br> T7<br> T8 <br> T9 <br> T10 <br> T11 <br> T12 <br> T13         | 25% <br> 33% <br> 50% <br>25%<br>25%<br>25%<br>25%<br>25%<br>25%<br>25%                       |                   |
 | Jonathan Örgård            | T1 <br> T3 <br> T4 <br> T5 <br> T6 <br> T8 <br> T9 <br> T10 <br> T11 <br> T12 <br> T13 | 25% <br> 100% <br> 100% <br> 33% <br> 25% <br> 25% <br> 25% <br> 25% <br> 25% <br> 25% <br> ???                       ||
-| Priyadarshini Vaidyanathan | T1 <br> T5<br>T6 <br> T7<br> T8 <br> T9 <br> T10 <br> T11 <br> T12 <br> T13   | 25% <br>25%<br> 25%<br>75%<br>25% <br>25%<br>25%<br>25%<br>25%<br>25%                        |
+| Priyadarshini Vaidyanathan | T1 <br> T5<br>T6 <br> T7<br> T8 <br> T9 <br> T10 <br> T11 <br> T12 <br> T13<T20>T20| 25% <br>25%<br> 25%<br>50%<br>25% <br>25%<br>25%<br>25%<br>25%<br>25% <br>50%                       |
 -->
 
 | Task ID | Description                               | Classify the complexity and extent of the task (small, medium, large) |  Justify the classification, by estimating the extent of the task, e.g., in terms of<ul><li>number of files change, added, deleted</li><li>number of lines of code changes, added, deleted</li><li>or in case of non-coding tasks use: pages (for documentation) or lines of comments (for code comments)</li></ul>|
@@ -15,7 +15,7 @@
 | T4      | LibSMCE unit test RGB565                  | small    | 1 file modified (+92 LOC)                                                                  |
 | T5      | Additional Pixel format YUV422            | small    | 6 file modified (+78 LOC; -1 LOC)                                                          |
 | T6      | LibSMCE unit test YUV422                  | small    | 1 file modified (+92 LOC)                                                                  |
-| T7      | Autoinstall CMake                         | medium   | ???                                                                                        |
+| T7      | Autoinstall CMake                         | medium   | 4 files modified                                                                                        |
 | T8      | Individual Milestone 3                    | small    | 6 files modified (+7 LOC; -45 LOC), more to come?                                          |
 | T9      | Individual Milestone 1                    | small    | Class diagram for project                                                                  |
 | T10     | Brainstroming sessions for IM1            | small    |                                                                                            |
