@@ -76,7 +76,7 @@
     </tr>
     <!-- Iswarya -->
     <tr>
-        <td rowspan="13">Iswarya Malleswaran</td>
+        <td rowspan="12">Iswarya Malleswaran</td>
         <td>T1</td><td>25%</td>
     </tr>
     <tr>
