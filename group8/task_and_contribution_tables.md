@@ -115,7 +115,7 @@
         <td>T15</td><td>25%</td>
     </tr>
     <tr>
-        <td>T20</td><td>100%</td>
+        <td>T20</td><td>50%</td>
     </tr>
     <!-- Jonathan -->
     <tr>
