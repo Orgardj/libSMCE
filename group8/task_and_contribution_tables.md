@@ -21,7 +21,8 @@
 | T19     | Improvde code coverge Board               | small    | 1 file modified (+26 LOC; −1 LOC), Board.cpp +10.30% coverage, total +0.47% coverage       |
 | T20     | Cygwin support                            | medium   | Compile & run SMCE on Cygwin                                                               |
 | T21     | Dev-Tool                                  | medium   | ???                                                                                        |
-| T22     | Improvde code coverge Testchain           | small    | 1 file modified (+59 LOC; −5 LOC), Testchain.cpp +8.14% coverage, total +0.45% coverage        |
+| T22     | Improvde code coverge Testchain           | small    | 1 file modified (+59 LOC; −5 LOC), Testchain.cpp +8.14% coverage, total +0.45% coverage    |
+| T23     | Reduce code block duplications            | small    | 3 files modified (+35 LOC; −109 LOC)                                                       |
 
 <!-- Remember to increse ROWSPAN when adding a new task under your name in the HTML table, otherwise the formating breaks -->
 <table>
@@ -118,7 +119,7 @@
     </tr>
     <!-- Jonathan -->
     <tr>
-        <td rowspan="17">Jonathan Örgård</td>
+        <td rowspan="18">Jonathan Örgård</td>
         <td>T1</td><td>25%</td>
     </tr>
     <tr>
@@ -169,6 +170,9 @@
     </tr>
     <tr>
         <td>T22</td><td>100%</td>
+    </tr>
+    <tr>
+        <td>T23</td><td>100%</td>
     </tr>
     <!-- Priyadarshini -->
     <tr>
