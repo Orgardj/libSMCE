@@ -29,19 +29,23 @@ TEST_CASE("Toolchain valid resource", "[Toolchain]") {
     REQUIRE_FALSE(tc.cmake_path().empty());
 }
 
+TEST_CASE("Toolchain resource does not exist", "[Toolchain]") {
+    const auto path = SMCE_TEST_DIR "/no_dir";
+    smce::Toolchain tc{path};
+    const auto ec = tc.check_suitable_environment();
+    REQUIRE(ec == smce::toolchain_error::resdir_absent);
+    REQUIRE(ec.message() == "Resource directory does not exist");
+    REQUIRE(tc.resource_dir() == path);
+}
+
 TEST_CASE("Toolchain empty resource", "[Toolchain]") {
     const auto path = SMCE_TEST_DIR "/empty_dir";
     std::filesystem::create_directory(path);
     smce::Toolchain tc{path};
     std::cout << tc.check_suitable_environment();
-    REQUIRE(tc.check_suitable_environment() == smce::toolchain_error::resdir_empty);
-    REQUIRE(tc.resource_dir() == path);
-}
-
-TEST_CASE("Toolchain resource does not exist", "[Toolchain]") {
-    const auto path = SMCE_TEST_DIR "/no_dir";
-    smce::Toolchain tc{path};
-    REQUIRE(tc.check_suitable_environment() == smce::toolchain_error::resdir_absent);
+    const auto ec = tc.check_suitable_environment();
+    REQUIRE(ec == smce::toolchain_error::resdir_empty);
+    REQUIRE(ec.message() == "Resource directory empty");
     REQUIRE(tc.resource_dir() == path);
 }
 
@@ -50,7 +54,9 @@ TEST_CASE("Toolchain resource is a file", "[Toolchain]") {
     outfile.close();
     const auto path = SMCE_TEST_DIR "/file.txt";
     smce::Toolchain tc{path};
-    REQUIRE(tc.check_suitable_environment() == smce::toolchain_error::resdir_file);
+    const auto ec = tc.check_suitable_environment();
+    REQUIRE(ec == smce::toolchain_error::resdir_file);
+    REQUIRE(ec.message() == "Resource directory is a file");
     REQUIRE(tc.resource_dir() == path);
 }
 
@@ -70,11 +76,15 @@ TEST_CASE("Toolchain invalid sketch", "[Toolchain]") {
     smce::Toolchain tc{SMCE_PATH};
     REQUIRE(!tc.check_suitable_environment());
     smce::Sketch sk{SKETCHES_PATH "sd_fs", {}};
-    REQUIRE(tc.compile(sk) == smce::toolchain_error::sketch_invalid);
+    const auto ec = tc.compile(sk);
+    REQUIRE(ec == smce::toolchain_error::sketch_invalid);
+    REQUIRE(ec.message() == "Sketch path is invalid");
     // clang-format off
     smce::Sketch sk2{"", {
        .fqbn = "arduino:avr:nano"
    }};
     // clang-format on
-    REQUIRE(tc.compile(sk) == smce::toolchain_error::sketch_invalid);
+    const auto ec2 = tc.compile(sk);
+    REQUIRE(ec2 == smce::toolchain_error::sketch_invalid);
+    REQUIRE(ec2.message() == "Sketch path is invalid");
 }
