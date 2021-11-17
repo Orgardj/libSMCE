@@ -168,7 +168,7 @@
         <td>T21</td><td>10%</td>
     </tr>
     <tr>
-        <td>T22</td><td>10%</td>
+        <td>T22</td><td>100%</td>
     </tr>
     <!-- Priyadarshini -->
     <tr>
