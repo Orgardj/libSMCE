@@ -21,8 +21,9 @@
 | T19     | Improvde code coverge Board               | small    | 1 file modified (+26 LOC; −1 LOC), Board.cpp +10.30% coverage, total +0.47% coverage       |
 | T20     | Cygwin support                            | medium   | Compile & run SMCE on Cygwin                                                               |
 | T21     | Dev-Tool                                  | medium   | ???                                                                                        |
+| T22     | Improvde code coverge Testchain           | small    | 1 file modified (+59 LOC; −5 LOC), Board.cpp +8.14% coverage, total +1.31% coverage        |
 
-
+<!-- Remember to increse ROWSPAN when adding a new task under your name in the HTML table, otherwise the formating breaks -->
 <table>
     <tr>
         <th>Task ID</th>
@@ -117,7 +118,7 @@
     </tr>
     <!-- Jonathan -->
     <tr>
-        <td rowspan="16">Jonathan Örgård</td>
+        <td rowspan="17">Jonathan Örgård</td>
         <td>T1</td><td>25%</td>
     </tr>
     <tr>
@@ -165,6 +166,9 @@
     </tr>
     <tr>
         <td>T21</td><td>10%</td>
+    </tr>
+    <tr>
+        <td>T22</td><td>10%</td>
     </tr>
     <!-- Priyadarshini -->
     <tr>
