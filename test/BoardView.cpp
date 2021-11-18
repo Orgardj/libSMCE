@@ -164,7 +164,7 @@ constexpr std::byte operator""_b(char c) noexcept { return static_cast<std::byte
 constexpr std::size_t bpp_444 = 4 + 4 + 4;
 constexpr std::size_t bpp_888 = 8 + 8 + 8;
 
-TEST_CASE("BoardView RGB444 cvt", "[BoardView]") {
+TEST_CASE("BoardView RGB and YUV422 cvt", "[BoardView]") {
     smce::Toolchain tc{SMCE_PATH};
     REQUIRE(!tc.check_suitable_environment());
     smce::Sketch sk{SKETCHES_PATH "noop", {.fqbn = "arduino:avr:nano"}};
@@ -185,7 +185,7 @@ TEST_CASE("BoardView RGB444 cvt", "[BoardView]") {
     auto fb2 = bv.frame_buffers[1];
     REQUIRE_FALSE(fb2.exists());
 
-    {
+    SECTION ("RGB444 write") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 1;
 
@@ -207,7 +207,7 @@ TEST_CASE("BoardView RGB444 cvt", "[BoardView]") {
         REQUIRE_FALSE(fb.read_rgb888(out2));
     }
 
-    {
+    SECTION ("RGB444 write big") {
         constexpr std::size_t height = 2;
         constexpr std::size_t width = 2;
 
@@ -225,7 +225,7 @@ TEST_CASE("BoardView RGB444 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
-    {
+    SECTION ("RGB444 write fail") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 1;
 
@@ -236,7 +236,7 @@ TEST_CASE("BoardView RGB444 cvt", "[BoardView]") {
         REQUIRE_FALSE(fb.write_rgb444(in));
     }
 
-    {
+    SECTION ("RGB444 read") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 1;
 
@@ -255,7 +255,7 @@ TEST_CASE("BoardView RGB444 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
-    {
+    SECTION ("RGB444 read big") {
         constexpr std::size_t height = 2;
         constexpr std::size_t width = 2;
 
@@ -274,7 +274,7 @@ TEST_CASE("BoardView RGB444 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
-    {
+    SECTION ("RGB444 read fail") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 1;
 
@@ -291,32 +291,7 @@ TEST_CASE("BoardView RGB444 cvt", "[BoardView]") {
         REQUIRE_FALSE(fb.write_rgb888(in2));
     }
 
-    REQUIRE(br.resume());
-    REQUIRE(br.stop());
-}
-
-TEST_CASE("BoardView RGB565 cvt", "[BoardView]") {
-    smce::Toolchain tc{SMCE_PATH};
-    REQUIRE(!tc.check_suitable_environment());
-    smce::Sketch sk{SKETCHES_PATH "noop", {.fqbn = "arduino:avr:nano"}};
-    const auto ec = tc.compile(sk);
-    if (ec)
-        std::cerr << tc.build_log().second;
-    REQUIRE_FALSE(ec);
-    smce::Board br{};
-    REQUIRE(br.configure({.frame_buffers = {{}}}));
-    REQUIRE(br.attach_sketch(sk));
-    REQUIRE(br.prepare());
-    auto bv = br.view();
-    REQUIRE(bv.valid());
-    REQUIRE(br.start());
-    REQUIRE(br.suspend());
-    auto fb = bv.frame_buffers[0];
-    REQUIRE(fb.exists());
-    auto fb2 = bv.frame_buffers[1];
-    REQUIRE_FALSE(fb2.exists());
-
-    {
+    SECTION ("RGB565 write") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 1;
 
@@ -334,7 +309,7 @@ TEST_CASE("BoardView RGB565 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
-    {
+    SECTION ("RGB565 write big") {
         constexpr std::size_t height = 2;
         constexpr std::size_t width = 2;
 
@@ -352,7 +327,7 @@ TEST_CASE("BoardView RGB565 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
-    {
+    SECTION ("RGB565 write fail") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 1;
 
@@ -363,7 +338,7 @@ TEST_CASE("BoardView RGB565 cvt", "[BoardView]") {
         REQUIRE_FALSE(fb.write_rgb565(in));
     }
 
-    {
+    SECTION ("RGB565 read") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 1;
 
@@ -381,7 +356,7 @@ TEST_CASE("BoardView RGB565 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
-    {
+    SECTION ("RGB565 read big") {
         constexpr std::size_t height = 2;
         constexpr std::size_t width = 2;
 
@@ -400,7 +375,7 @@ TEST_CASE("BoardView RGB565 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
-    {
+    SECTION ("RGB565 read fail") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 1;
 
@@ -414,32 +389,7 @@ TEST_CASE("BoardView RGB565 cvt", "[BoardView]") {
         REQUIRE_FALSE(fb.read_rgb565(out));
     }
 
-    REQUIRE(br.resume());
-    REQUIRE(br.stop());
-}
-
-TEST_CASE("BoardView YUV422 cvt", "[BoardView]") {
-    smce::Toolchain tc{SMCE_PATH};
-    REQUIRE(!tc.check_suitable_environment());
-    smce::Sketch sk{SKETCHES_PATH "noop", {.fqbn = "arduino:avr:nano"}};
-    const auto ec = tc.compile(sk);
-    if (ec)
-        std::cerr << tc.build_log().second;
-    REQUIRE_FALSE(ec);
-    smce::Board br{};
-    REQUIRE(br.configure({.frame_buffers = {{}}}));
-    REQUIRE(br.attach_sketch(sk));
-    REQUIRE(br.prepare());
-    auto bv = br.view();
-    REQUIRE(bv.valid());
-    REQUIRE(br.start());
-    REQUIRE(br.suspend());
-    auto fb = bv.frame_buffers[0];
-    REQUIRE(fb.exists());
-    auto fb2 = bv.frame_buffers[1];
-    REQUIRE_FALSE(fb2.exists());
-
-    {
+    SECTION ("YUV422 write") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 2;
 
@@ -457,7 +407,7 @@ TEST_CASE("BoardView YUV422 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
-    {
+    SECTION ("YUV422 write big") {
         constexpr std::size_t height = 2;
         constexpr std::size_t width = 2;
 
@@ -475,7 +425,7 @@ TEST_CASE("BoardView YUV422 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
-    {
+    SECTION ("YUV422 write fail") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 2;
 
@@ -486,7 +436,7 @@ TEST_CASE("BoardView YUV422 cvt", "[BoardView]") {
         REQUIRE_FALSE(fb.write_yuv422(in));
     }
 
-    {
+    SECTION ("YUV422 read") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 2;
 
@@ -504,7 +454,7 @@ TEST_CASE("BoardView YUV422 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
-    {
+    SECTION ("YUV422 read big") {
         constexpr std::size_t height = 2;
         constexpr std::size_t width = 2;
 
@@ -523,7 +473,7 @@ TEST_CASE("BoardView YUV422 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
-    {
+    SECTION ("YUV422 read fail") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 2;
 
