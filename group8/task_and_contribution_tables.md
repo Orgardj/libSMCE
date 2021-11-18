@@ -23,6 +23,8 @@
 | T21     | Dev-Tool                                  | medium   | ???                                                                                        |
 | T22     | Improvde code coverge Testchain           | small    | 1 file modified (+59 LOC; −5 LOC), Testchain.cpp +8.14% coverage, total +0.45% coverage    |
 | T23     | Reduce code block duplications            | small    | 3 files modified (+35 LOC; −109 LOC)                                                       |
+| T24     | Wix Backend packaging                     | small    | 2 files modified (+35 LOC;)                                                                |
+| T25     | Validate runtime CMake minimum required version            | small    | 2 files modified (+50 LOC; )                                              |
 
 <!-- Remember to increse ROWSPAN when adding a new task under your name in the HTML table, otherwise the formating breaks -->
 <table>
@@ -116,6 +118,12 @@
     </tr>
     <tr>
         <td>T21</td><td>30%</td>
+    </tr>
+    <tr>
+        <td>T24</td><td>50%</td>
+    </tr>
+    <tr>
+        <td>T25</td><td>50%</td>
     </tr>
     <!-- Jonathan -->
     <tr>
@@ -219,5 +227,11 @@
     </tr>
     <tr>
         <td>T21</td><td>30%</td>
-    </tr>    
+    </tr> 
+    <tr>
+        <td>T24</td><td>50%</td>
+    </tr>
+    <tr>
+        <td>T25</td><td>50%</td>
+    </tr>
 </table>
