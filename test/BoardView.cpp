@@ -185,7 +185,7 @@ TEST_CASE("BoardView RGB and YUV422 cvt", "[BoardView]") {
     auto fb2 = bv.frame_buffers[1];
     REQUIRE_FALSE(fb2.exists());
 
-    SECTION ("RGB444 write") {
+    SECTION("RGB444 write") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 1;
 
@@ -207,7 +207,7 @@ TEST_CASE("BoardView RGB and YUV422 cvt", "[BoardView]") {
         REQUIRE_FALSE(fb.read_rgb888(out2));
     }
 
-    SECTION ("RGB444 write big") {
+    SECTION("RGB444 write big") {
         constexpr std::size_t height = 2;
         constexpr std::size_t width = 2;
 
@@ -225,7 +225,7 @@ TEST_CASE("BoardView RGB and YUV422 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
-    SECTION ("RGB444 write fail") {
+    SECTION("RGB444 write fail") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 1;
 
@@ -236,7 +236,7 @@ TEST_CASE("BoardView RGB and YUV422 cvt", "[BoardView]") {
         REQUIRE_FALSE(fb.write_rgb444(in));
     }
 
-    SECTION ("RGB444 read") {
+    SECTION("RGB444 read") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 1;
 
@@ -255,7 +255,7 @@ TEST_CASE("BoardView RGB and YUV422 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
-    SECTION ("RGB444 read big") {
+    SECTION("RGB444 read big") {
         constexpr std::size_t height = 2;
         constexpr std::size_t width = 2;
 
@@ -274,7 +274,7 @@ TEST_CASE("BoardView RGB and YUV422 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
-    SECTION ("RGB444 read fail") {
+    SECTION("RGB444 read fail") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 1;
 
@@ -291,7 +291,7 @@ TEST_CASE("BoardView RGB and YUV422 cvt", "[BoardView]") {
         REQUIRE_FALSE(fb.write_rgb888(in2));
     }
 
-    SECTION ("RGB565 write") {
+    SECTION("RGB565 write") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 1;
 
@@ -309,7 +309,7 @@ TEST_CASE("BoardView RGB and YUV422 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
-    SECTION ("RGB565 write big") {
+    SECTION("RGB565 write big") {
         constexpr std::size_t height = 2;
         constexpr std::size_t width = 2;
 
@@ -327,7 +327,7 @@ TEST_CASE("BoardView RGB and YUV422 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
-    SECTION ("RGB565 write fail") {
+    SECTION("RGB565 write fail") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 1;
 
@@ -338,7 +338,7 @@ TEST_CASE("BoardView RGB and YUV422 cvt", "[BoardView]") {
         REQUIRE_FALSE(fb.write_rgb565(in));
     }
 
-    SECTION ("RGB565 read") {
+    SECTION("RGB565 read") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 1;
 
@@ -356,7 +356,7 @@ TEST_CASE("BoardView RGB and YUV422 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
-    SECTION ("RGB565 read big") {
+    SECTION("RGB565 read big") {
         constexpr std::size_t height = 2;
         constexpr std::size_t width = 2;
 
@@ -375,7 +375,7 @@ TEST_CASE("BoardView RGB and YUV422 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
-    SECTION ("RGB565 read fail") {
+    SECTION("RGB565 read fail") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 1;
 
@@ -389,7 +389,7 @@ TEST_CASE("BoardView RGB and YUV422 cvt", "[BoardView]") {
         REQUIRE_FALSE(fb.read_rgb565(out));
     }
 
-    SECTION ("YUV422 write") {
+    SECTION("YUV422 write") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 2;
 
@@ -407,7 +407,7 @@ TEST_CASE("BoardView RGB and YUV422 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
-    SECTION ("YUV422 write big") {
+    SECTION("YUV422 write big") {
         constexpr std::size_t height = 2;
         constexpr std::size_t width = 2;
 
@@ -425,7 +425,7 @@ TEST_CASE("BoardView RGB and YUV422 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
-    SECTION ("YUV422 write fail") {
+    SECTION("YUV422 write fail") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 2;
 
@@ -436,7 +436,7 @@ TEST_CASE("BoardView RGB and YUV422 cvt", "[BoardView]") {
         REQUIRE_FALSE(fb.write_yuv422(in));
     }
 
-    SECTION ("YUV422 read") {
+    SECTION("YUV422 read") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 2;
 
@@ -454,7 +454,7 @@ TEST_CASE("BoardView RGB and YUV422 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
-    SECTION ("YUV422 read big") {
+    SECTION("YUV422 read big") {
         constexpr std::size_t height = 2;
         constexpr std::size_t width = 2;
 
@@ -473,7 +473,7 @@ TEST_CASE("BoardView RGB and YUV422 cvt", "[BoardView]") {
         REQUIRE(out == expected_out);
     }
 
-    SECTION ("YUV422 read fail") {
+    SECTION("YUV422 read fail") {
         constexpr std::size_t height = 1;
         constexpr std::size_t width = 2;
 

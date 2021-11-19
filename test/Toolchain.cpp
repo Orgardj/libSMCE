@@ -59,7 +59,6 @@ TEST_CASE("Toolchain resource", "[Toolchain]") {
         REQUIRE(ec.message() == "Resource directory is a file");
         REQUIRE(tc.resource_dir() == path);
     }
-
 }
 
 TEST_CASE("Toolchain sketch", "[Toolchain]") {

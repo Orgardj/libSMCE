@@ -129,10 +129,10 @@ VirtualPin VirtualPins::operator[](std::size_t pin_id) noexcept {
 [[nodiscard]] auto VirtualUartBuffer::get_channel() noexcept {
     auto& chan = m_bdat->uart_channels[m_index];
     switch (m_dir) {
-        case Direction::rx:
-            return std::tie(chan.rx, chan.rx_mut, chan.max_buffered_rx);
-        case Direction::tx:
-            return std::tie(chan.tx, chan.tx_mut, chan.max_buffered_tx);
+    case Direction::rx:
+        return std::tie(chan.rx, chan.rx_mut, chan.max_buffered_rx);
+    case Direction::tx:
+        return std::tie(chan.tx, chan.tx_mut, chan.max_buffered_tx);
     }
     unreachable(); // GCOV_EXCL_LINE
 }
