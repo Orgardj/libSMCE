@@ -36,7 +36,7 @@
     </tr>
     <!-- Dinesh -->
     <tr>
-        <td rowspan="11">Dinesh Bhandari</td>
+        <td rowspan="12">Dinesh Bhandari</td>
         <td>T1</td><td>25%</td>
     </tr>
     <tr>
