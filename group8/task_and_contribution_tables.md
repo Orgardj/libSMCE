@@ -25,6 +25,7 @@
 | T23     | Reduce code block duplications            | small    | 3 files modified (+35 LOC; −109 LOC)                                                       |
 | T24     | Wix Backend packaging                     | small    | 2 files modified (+35 LOC)                                                                |
 | T25     | Validate runtime CMake minimum required version            | small    | 2 files modified (+50 LOC)                                              |
+| T26     | Implement a sketch editor/preview to smce-gd            | medium    | 4 files changed (+215 LOC; -5 LOC)                                          |
 
 <!-- Remember to increse ROWSPAN when adding a new task under your name in the HTML table, otherwise the formating breaks -->
 <table>
@@ -72,6 +73,9 @@
     </tr>
     <tr>
         <td>T21</td><td>30%</td>
+    </tr>
+    <tr>
+        <td>T26</td><td>100%</td>
     </tr>
     <!-- Iswarya -->
     <tr>
