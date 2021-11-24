@@ -69,12 +69,12 @@ jobs:
       - name: Collect CMake coverage information
         run: |
           ci/scan-cmake-commands.sh
-      - name: Upload coverage to Google Drive
-        uses: Jodebu/upload-to-drive@master
+      - name: Upload to gdrive
+        uses: team-tumbleweed/gdrive-upload-action@main
         with:
-          target: ./coverage.info,./cmake-codecov-report.json
-          credentials: secrets.DRIVE_TOKEN
-          folder: /1WfcxVOEbszWgmbs3BQzAmx_FakGU82f1
+          filename: "./coverage.info"
+          folderId: ${{ secrets./1WfcxVOEbszWgmbs3BQzAmx_FakGU82f1 }}
+          credentials: ${{ secrets.DRIVE_TOKEN }}
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
