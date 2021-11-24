@@ -73,7 +73,7 @@ jobs:
         uses: team-tumbleweed/gdrive-upload-action@main
         with:
           filename: "./coverage.info"
-          folderId: ${{ secrets./1WfcxVOEbszWgmbs3BQzAmx_FakGU82f1 }}
+          folderId: ${{ secrets.1WfcxVOEbszWgmbs3BQzAmx_FakGU82f1 }}
           credentials: ${{ secrets.DRIVE_TOKEN }}
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
