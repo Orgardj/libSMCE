@@ -69,13 +69,12 @@ jobs:
       - name: Collect CMake coverage information
         run: |
           ci/scan-cmake-commands.sh
-      # Upload to Drive
       - name: Upload coverage to Google Drive
         uses: Jodebu/upload-to-drive@master
         with:
-          target: README.md
+          target: ./coverage.info,./cmake-codecov-report.json
           credentials: secrets.DRIVE_TOKEN
-          folder: 1WfcxVOEbszWgmbs3BQzAmx_FakGU82f1
+          folder: /1WfcxVOEbszWgmbs3BQzAmx_FakGU82f1
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
