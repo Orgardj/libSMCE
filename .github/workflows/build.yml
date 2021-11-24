@@ -65,7 +65,7 @@ jobs:
         run: |
           lcov --directory . --capture --output-file coverage.info
           lcov --remove coverage.info '/usr/*' "${HOME}"'/.cache/*' "$(pwd)/test/*" "$(pwd)/build/*" --output-file coverage.info
-          lcov --list coverage.info > coverage_table.txt
+          lcov --list coverage.info | coverage_table.txt
       - name: Collect CMake coverage information
         run: |
           ci/scan-cmake-commands.sh
