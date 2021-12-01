@@ -1,3 +1,5 @@
+<!-- Remember to add task to Group Report document on google doc as well, since we moved tasks there now -->
+
 | Task ID | Description                               | Classify the complexity and extent of the task (small, medium, large) |  Justify the classification, by estimating the extent of the task, e.g., in terms of<ul><li>number of files change, added, deleted</li><li>number of lines of code changes, added, deleted</li><li>or in case of non-coding tasks use: pages (for documentation) or lines of comments (for code comments)</li></ul>|
 | :------ | :---------------------------------------- | :-------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | T1      | Meetings with customer                    | small    | Weekly meetings and prep                                                                   |
@@ -28,6 +30,7 @@
 | T26     | Implement a sketch editor/preview to smce-gd            | medium    | 4 files changed (+215 LOC; -5 LOC)                                          |
 
 <!-- Remember to increse ROWSPAN when adding a new task under your name in the HTML table, otherwise the formating breaks -->
+<!-- Remember to add task to Group Report document on google doc as well, since we moved tasks there now -->
 <table>
     <tr>
         <th>Task ID</th>
@@ -239,3 +242,5 @@
         <td>T25</td><td>50%</td>
     </tr>
 </table>
+
+<!-- Remember to add task to Group Report document on google doc as well, since we moved tasks there now -->
