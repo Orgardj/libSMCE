@@ -28,6 +28,7 @@
 | T24     | Wix Backend packaging                     | small    | 2 files modified (+35 LOC)                                                                |
 | T25     | Validate runtime CMake minimum required version            | small    | 2 files modified (+50 LOC)                                              |
 | T26     | Implement a sketch editor/preview to smce-gd            | medium    | 4 files changed (+215 LOC; -5 LOC)                                          |
+| T27     | NuGet Frontend packaging                     | small    | 2 files modified (+35 LOC)                                                                |
 
 <!-- Remember to increse ROWSPAN when adding a new task under your name in the HTML table, otherwise the formating breaks -->
 <!-- Remember to add task to Group Report document on google doc as well, since we moved tasks there now -->
@@ -130,7 +131,7 @@
         <td>T24</td><td>50%</td>
     </tr>
     <tr>
-        <td>T25</td><td>50%</td>
+        <td>T27</td><td>100%</td>
     </tr>
     <!-- Jonathan -->
     <tr>
@@ -239,7 +240,7 @@
         <td>T24</td><td>50%</td>
     </tr>
     <tr>
-        <td>T25</td><td>50%</td>
+        <td>T25</td><td>100%</td>
     </tr>
 </table>
 
