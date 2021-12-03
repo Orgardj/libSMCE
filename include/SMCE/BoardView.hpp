@@ -131,6 +131,7 @@ class SMCE_API VirtualUartBuffer {
     /// Object validity check
     [[nodiscard]] bool exists() noexcept;
     [[nodiscard]] std::size_t max_size() noexcept;
+    [[nodiscard]] auto get_channel() noexcept;
     [[nodiscard]] std::size_t size() noexcept;
     std::size_t read(std::span<char>) noexcept;
     std::size_t write(std::span<const char>) noexcept;

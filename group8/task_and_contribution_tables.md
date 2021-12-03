@@ -1,11 +1,4 @@
-<!--
-| Name                       | Task ID                            | Contribution in %                         |
-| :------------------------- | :--------------------------------- | :---------------------------------------- |
-| Dinesh Bhandari            | T1 <br> T2 <br> T8 <br> T9 <br> T10 <br> T11 <br> T12 <br> T13                 | 25% <br> 100%<br> 25% <br>25%<br>25%<br>25%<br>25%<br>25%                        |                          |
-| Iswarya Malleswaran        | T1 <br> T5 <br> T6 <br> T7<br> T8 <br> T9 <br> T10 <br> T11 <br> T12 <br> T13         | 25% <br> 33% <br> 50% <br>25%<br>25%<br>25%<br>25%<br>25%<br>25%<br>25%                       |                   |
-| Jonathan Örgård            | T1 <br> T3 <br> T4 <br> T5 <br> T6 <br> T8 <br> T9 <br> T10 <br> T11 <br> T12 <br> T13 | 25% <br> 100% <br> 100% <br> 33% <br> 25% <br> 25% <br> 25% <br> 25% <br> 25% <br> 25% <br> ???                       ||
-| Priyadarshini Vaidyanathan | T1 <br> T5<br>T6 <br> T7<br> T8 <br> T9 <br> T10 <br> T11 <br> T12 <br> T13<T20>T20| 25% <br>25%<br> 25%<br>50%<br>25% <br>25%<br>25%<br>25%<br>25%<br>25% <br>50%                       |
--->
+<!-- Remember to add task to Group Report document on google doc as well, since we moved tasks there now -->
 
 | Task ID | Description                               | Classify the complexity and extent of the task (small, medium, large) |  Justify the classification, by estimating the extent of the task, e.g., in terms of<ul><li>number of files change, added, deleted</li><li>number of lines of code changes, added, deleted</li><li>or in case of non-coding tasks use: pages (for documentation) or lines of comments (for code comments)</li></ul>|
 | :------ | :---------------------------------------- | :-------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -15,7 +8,7 @@
 | T4      | LibSMCE unit test RGB565                  | small    | 1 file modified (+92 LOC)                                                                  |
 | T5      | Additional Pixel format YUV422            | small    | 6 file modified (+78 LOC; -1 LOC)                                                          |
 | T6      | LibSMCE unit test YUV422                  | small    | 1 file modified (+92 LOC)                                                                  |
-| T7      | Autoinstall CMake                         | medium   | 4 files modified                                                                                        |
+| T7      | Autoinstall CMake                         | medium   | 4 files modified                                                                           |
 | T8      | Individual Milestone 3                    | small    | 6 files modified (+7 LOC; -45 LOC), more to come?                                          |
 | T9      | Individual Milestone 1                    | small    | Class diagram for project                                                                  |
 | T10     | Brainstroming sessions for IM1            | small    |                                                                                            |
@@ -29,8 +22,16 @@
 | T18     | Improvde code coverge BoardView           | small    | 1 file modified (+172 LOC; −12 LOC), BoardView.cpp +17.73% coverage, total +2.75% coverage |
 | T19     | Improvde code coverge Board               | small    | 1 file modified (+26 LOC; −1 LOC), Board.cpp +10.30% coverage, total +0.47% coverage       |
 | T20     | Cygwin support                            | medium   | Compile & run SMCE on Cygwin                                                               |
+| T21     | Dev-Tool                                  | medium   | ???                                                                                        |
+| T22     | Improvde code coverge Testchain           | small    | 1 file modified (+59 LOC; −5 LOC), Testchain.cpp +8.14% coverage, total +0.45% coverage    |
+| T23     | Reduce code block duplications            | small    | 3 files modified (+35 LOC; −109 LOC)                                                       |
+| T24     | Wix Backend packaging                     | small    | 2 files modified (+35 LOC)                                                                |
+| T25     | Validate runtime CMake minimum required version            | small    | 2 files modified (+50 LOC)                                              |
+| T26     | Implement a sketch editor/preview to smce-gd            | medium    | 4 files changed (+215 LOC; -5 LOC)                                          |
+| T27     | NuGet Frontend packaging                     | small    | 2 files modified (+35 LOC)                                                                |
 
-
+<!-- Remember to increse ROWSPAN when adding a new task under your name in the HTML table, otherwise the formating breaks -->
+<!-- Remember to add task to Group Report document on google doc as well, since we moved tasks there now -->
 <table>
     <tr>
         <th>Task ID</th>
@@ -39,7 +40,7 @@
     </tr>
     <!-- Dinesh -->
     <tr>
-        <td rowspan="10">Dinesh Bhandari</td>
+        <td rowspan="12">Dinesh Bhandari</td>
         <td>T1</td><td>25%</td>
     </tr>
     <tr>
@@ -74,9 +75,15 @@
     <tr>
         <td>T16</td><td>100%</td>
     </tr>
+    <tr>
+        <td>T21</td><td>30%</td>
+    </tr>
+    <tr>
+        <td>T26</td><td>100%</td>
+    </tr>
     <!-- Iswarya -->
     <tr>
-        <td rowspan="12">Iswarya Malleswaran</td>
+        <td rowspan="15">Iswarya Malleswaran</td>
         <td>T1</td><td>25%</td>
     </tr>
     <tr>
@@ -117,9 +124,18 @@
     <tr>
         <td>T20</td><td>50%</td>
     </tr>
+    <tr>
+        <td>T21</td><td>30%</td>
+    </tr>
+    <tr>
+        <td>T24</td><td>50%</td>
+    </tr>
+    <tr>
+        <td>T27</td><td>100%</td>
+    </tr>
     <!-- Jonathan -->
     <tr>
-        <td rowspan="15">Jonathan Örgård</td>
+        <td rowspan="18">Jonathan Örgård</td>
         <td>T1</td><td>25%</td>
     </tr>
     <tr>
@@ -165,9 +181,18 @@
     <tr>
         <td>T19</td><td>100%</td>
     </tr>
+    <tr>
+        <td>T21</td><td>10%</td>
+    </tr>
+    <tr>
+        <td>T22</td><td>100%</td>
+    </tr>
+    <tr>
+        <td>T23</td><td>100%</td>
+    </tr>
     <!-- Priyadarshini -->
     <tr>
-        <td rowspan="11">Priyadarshini Vaidyanathan</td>
+        <td rowspan="15">Priyadarshini Vaidyanathan</td>
         <td>T1</td><td>25%</td>
     </tr>
     <tr>
@@ -208,5 +233,15 @@
     <tr>
         <td>T15</td><td>25%</td>
     </tr>
-    
+    <tr>
+        <td>T21</td><td>30%</td>
+    </tr> 
+    <tr>
+        <td>T24</td><td>50%</td>
+    </tr>
+    <tr>
+        <td>T25</td><td>100%</td>
+    </tr>
 </table>
+
+<!-- Remember to add task to Group Report document on google doc as well, since we moved tasks there now -->
